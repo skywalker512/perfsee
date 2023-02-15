@@ -39,7 +39,9 @@ export const getDefaultPerfseeConfig: () => PerfseeConfig = () => ({
   path: '',
   get origin() {
     return this.dev
-      ? 'http://localhost:8080'
+      ? process.env.GITPOD_WORKSPACE_URL
+        ? process.env.GITPOD_WORKSPACE_URL.replace('https://', 'https://8080-')
+        : 'http://localhost:8080'
       : `${this.https ? 'https' : 'http'}://${this.host}${this.host === 'localhost' ? `:${this.port}` : ''}`
   },
   get baseUrl() {

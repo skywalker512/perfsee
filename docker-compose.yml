@@ -85,3 +85,12 @@ services:
       NODE_ENV: development
       SERVER: http://server:3000
     command: yarn dev -p @perfsee/platform
+
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - mysql
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=mysql

@@ -72,7 +72,7 @@ const OptimizeOptionOptions: () => webpack.Configuration['optimization'] = () =>
 })
 
 const config: () => webpack.Configuration = () => {
-  let publicPath = process.env.PUBLIC_PATH ?? (isProduction() ? '' : 'http://localhost:8080')
+  let publicPath = process.env.PUBLIC_PATH ?? (isProduction() ? '' : '/')
   publicPath = publicPath.endsWith('/') ? publicPath : `${publicPath}/`
 
   return {
@@ -201,6 +201,11 @@ export async function startDevServer(entry: string, externalConfig: webpack.Conf
           path: route,
           target: process.env.SERVER ?? 'http://localhost:3000',
         })),
+        host: '0.0.0.0',
+        allowedHosts: 'all',
+        client: {
+          webSocketURL: 'auto://0.0.0.0:0/ws',
+        },
       },
       compiler,
     )

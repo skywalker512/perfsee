@@ -1,21 +1,15 @@
-FROM debian:stretch AS server
+FROM node:lts AS server
 
-LABEL org.opencontainers.image.source "https://github.com/perfsee/perfsee"
+LABEL org.opencontainers.image.source "https://github.com/skywalker512/perfsee"
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-  DEBIAN_FRONTEND="noninteractive" \
-  PATH=/root/.fnm:/root/.fnm/aliases/default/bin:$PATH
+  DEBIAN_FRONTEND="noninteractive"
 
 SHELL ["/bin/bash", "-c"]
 
 RUN cat /etc/apt/sources.list && \
   apt-get update && \
-  apt-get install procps curl unzip git libsecret-1-dev ca-certificates gnupg2 -y --no-install-recommends --fix-missing && \
-  # https://github.com/Schniz/fnm
-  curl -fsSL --insecure https://fnm.vercel.app/install | bash && \
-  source ~/.bashrc && \
-  fnm install --lts && \
-  npm install yarn --location=global
+  apt-get install procps curl unzip git libsecret-1-dev ca-certificates gnupg2 -y --no-install-recommends --fix-missing
 
 FROM server AS runner
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
@@ -31,18 +25,28 @@ ENV RUSTUP_HOME=/usr/local/rustup \
 RUN apt-get install build-essential -y --no-install-recommends --fix-missing
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-FROM ghcr.io/perfsee/perfsee/develop:latest as compose_develop
+FROM develop as compose_develop
 ADD . /code
 WORKDIR /code
 RUN yarn
 
-FROM ghcr.io/perfsee/perfsee/runner:latest AS deploy
+FROM server as build
 ADD . /code
 WORKDIR /code
-RUN yarn && yarn build
-CMD ["node", "-r", "./tools/paths-register", "packages/platform-server/dist/index.js"]
+RUN source ~/.bashrc && yarn && yarn build && \
+  cd docs && yarn && yarn build && cd .. && \
+  npx @vercel/ncc build packages/platform-server/src/index.ts -t -d --v8-cache --target es2020
 
-FROM ghcr.io/perfsee/perfsee/server:latest as runner_deploy
+FROM node:lts as deploy
+WORKDIR /app
+COPY --from=build /code/dist /app/
+COPY --from=build /code/assets /app/assets
+RUN install -D /dev/null node_modules/typeorm/index.js && \
+  install -D /dev/null node_modules/@nestjs/typeorm/index.js
+EXPOSE 3000
+CMD ["node", "index.js"]
+
+FROM runner as runner_deploy
 ADD . /code
 WORKDIR /code
 RUN yarn && yarn build

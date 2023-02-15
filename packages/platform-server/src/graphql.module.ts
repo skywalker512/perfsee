@@ -69,7 +69,9 @@ export class GqlService {
         return {
           ...config.graphql,
           path: `${config.path}/graphql`,
-          autoSchemaFile: join(__dirname, '..', '..', 'schema', 'src', 'server-schema.gql'),
+          autoSchemaFile: config.prod
+            ? join(__dirname, 'server-schema.gql')
+            : join(__dirname, '..', '..', 'schema', 'src', 'server-schema.gql'),
           resolvers: { JSON: GraphQLJSON },
           plugins: [new LogPlugin(metrics, logger)],
         }

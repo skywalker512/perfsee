@@ -8,6 +8,6 @@ for (const env in perfsee.ENV_MAP) {
     typeof config === 'string' ? [config, process.env[env]] : [config[0], parseEnvValue(process.env[env], config[1])]
 
   if (typeof value !== 'undefined') {
-    set(globalThis.perfsee, path, process.env[env])
+    set(globalThis.perfsee, path, value)
   }
 }

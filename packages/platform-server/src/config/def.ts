@@ -11,7 +11,7 @@ declare global {
   var perfsee: PerfseeConfig
 }
 
-type EnvConfigType = 'string' | 'int' | 'float' | 'boolean'
+type EnvConfigType = 'string' | 'int' | 'float' | 'boolean' | 'object'
 type ConfigPaths = LeafPaths<
   Omit<PerfseeConfig, 'ENV_MAP' | 'version' | 'baseUrl' | 'origin' | 'prod' | 'dev' | 'test' | 'deploy'>,
   '',
@@ -39,7 +39,15 @@ export function parseEnvValue(value: string | undefined, type?: EnvConfigType) {
     return
   }
 
-  return type === 'int' ? int(value) : type === 'float' ? float(value) : type === 'boolean' ? boolean(value) : value
+  return type === 'int'
+    ? int(value)
+    : type === 'float'
+    ? float(value)
+    : type === 'boolean'
+    ? boolean(value)
+    : type === 'object'
+    ? JSON.parse(value)
+    : value
 }
 
 /**

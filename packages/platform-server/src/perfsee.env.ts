@@ -17,6 +17,7 @@ perfsee.ENV_MAP = {
   MYSQL_USERNAME: 'mysql.username',
   MYSQL_PASSWORD: 'mysql.password',
   MYSQL_DB: 'mysql.database',
+  MYSQL_SSL: ['mysql.ssl', 'object'],
   REDIS_HOST: 'redis.host',
   REDIS_PORT: ['redis.port', 'int'],
   REDIS_PASSWORD: 'redis.password',

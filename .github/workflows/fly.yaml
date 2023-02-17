@@ -1,0 +1,21 @@
+name: Fly Deploy
+on:
+  push:
+    branches:
+      - main
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  KEY: ${{ secrets.PRIVATE_KEY_GITHUB_APP }}
+  APP_NAME: ${{ secrets.APP_NAME }}
+jobs:
+  deploy:
+    name: Deploy app
+    environment:
+      name: fly
+      url: https://perfsee.fly.dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: |
+          flyctl deploy -a $APP_NAME --remote-only --build-secret GITHUB_APP_PRIVATE_KEY="$KEY" --build-target deploy

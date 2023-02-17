@@ -22,6 +22,7 @@ perfsee.ENV_MAP = {
   REDIS_PORT: ['redis.port', 'int'],
   REDIS_PASSWORD: 'redis.password',
   REDIS_DB: ['redis.db', 'int'],
+  REDIS_FAMILY: 'redis.family',
   DEFAULT_ADMIN_EMAIL: ['auth.admin.email'],
   DEFAULT_ADMIN_PASSWORD: ['auth.admin.password'],
   EMAIL_SMTP_HOST: 'email.smtp.host',

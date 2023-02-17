@@ -17,5 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
+      - uses: docker/setup-buildx-action@v2
       - run: |
-          flyctl deploy -a $APP_NAME --remote-only --build-secret GITHUB_APP_PRIVATE_KEY="$KEY" --build-target deploy
+          flyctl deploy -a $APP_NAME --local-only --build-secret GITHUB_APP_PRIVATE_KEY="$KEY" --build-target deploy

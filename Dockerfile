@@ -46,6 +46,9 @@ RUN install -D /dev/null node_modules/typeorm/index.js && \
 EXPOSE 3000
 CMD ["node", "index.js"]
 
+FROM deploy as fly
+RUN --mount=type=secret,id=PRIVATE_KEY cat /run/secrets/PRIVATE_KEY > /app/perfsee.private-key.pem
+
 FROM runner as runner_deploy
 ADD . /code
 WORKDIR /code

@@ -37,7 +37,7 @@ RUN source ~/.bashrc && yarn && yarn build && yarn cli bundle -p @perfsee/platfo
   npx @vercel/nft build output/main.js && \
   cd docs && yarn && yarn build
 
-FROM node:lts as deploy
+FROM node:slim as deploy
 WORKDIR /app
 COPY --from=build /code/dist /app/
 COPY --from=build /code/assets /app/assets

@@ -26,18 +26,13 @@ RUN apt-get install build-essential -y --no-install-recommends --fix-missing
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 FROM develop as compose_develop
-ADD . /code
 WORKDIR /code
+ADD . /code
 RUN yarn
 
-FROM server as deps
+FROM server as build
 WORKDIR /code
-COPY ./package.json ./yarn.lock ./
-COPY ./docs/package.json ./docs/yarn.lock ./docs/
-RUN yarn && cd docs && yarn
-
-FROM deps as build
-ADD . .
+ADD . /code
 RUN source ~/.bashrc && yarn && yarn build && yarn cli bundle -p @perfsee/platform-server && \
   npx @vercel/nft build output/main.js && \
   cd docs && yarn && yarn build
@@ -47,7 +42,7 @@ WORKDIR /app
 COPY --from=build /code/dist /app/
 COPY --from=build /code/assets /app/assets
 EXPOSE 3000
-CMD ["node", "output/index.js"]
+CMD ["node", "output/main.js"]
 
 FROM deploy as fly
 RUN --mount=type=secret,id=PRIVATE_KEY cat /run/secrets/PRIVATE_KEY > /app/perfsee.private-key.pem

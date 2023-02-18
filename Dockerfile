@@ -30,12 +30,17 @@ ADD . /code
 WORKDIR /code
 RUN yarn
 
-FROM server as build
-ADD . /code
+FROM server as deps
 WORKDIR /code
+COPY ./package.json ./yarn.lock ./
+COPY ./docs/package.json ./docs/yarn.lock ./docs/
+RUN yarn && cd docs && yarn
+
+FROM deps as build
+ADD . .
 RUN source ~/.bashrc && yarn && yarn build && yarn cli bundle -p @perfsee/platform-server && \
   npx @vercel/nft build output/main.js && \
-  cd docs && yarn && yarn build 
+  cd docs && yarn && yarn build
 
 FROM node:lts as deploy
 WORKDIR /app

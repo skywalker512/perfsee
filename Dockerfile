@@ -30,23 +30,19 @@ ADD . /code
 WORKDIR /code
 RUN yarn
 
-FROM server as deploy
+FROM server as build
 ADD . /app
 WORKDIR /app
-RUN source ~/.bashrc && yarn && yarn build && \
-  cd docs && yarn && yarn build && cd ..
+RUN source ~/.bashrc && yarn && yarn build && yarn cli bundle -p @perfsee/platform-server && \
+  npx @vercel/nft build output/main.js && \
+  cd docs && yarn && yarn build 
 
-CMD ["node", "-r", "./tools/paths-register", "packages/platform-server/dist/index.js"]
-# npx @vercel/ncc build packages/platform-server/src/index.ts -t -d --v8-cache --target es2020
-
-# FROM node:lts as deploy
-# WORKDIR /app
-# COPY --from=build /code/dist /app/
-# COPY --from=build /code/assets /app/assets
-# RUN install -D /dev/null node_modules/typeorm/index.js && \
-#   install -D /dev/null node_modules/@nestjs/typeorm/index.js
-# EXPOSE 3000
-# CMD ["node", "index.js"]
+FROM node:lts as deploy
+WORKDIR /app
+COPY --from=build /code/dist /app/
+COPY --from=build /code/assets /app/assets
+EXPOSE 3000
+CMD ["node", "output/index.js"]
 
 FROM deploy as fly
 RUN --mount=type=secret,id=PRIVATE_KEY cat /run/secrets/PRIVATE_KEY > /app/perfsee.private-key.pem

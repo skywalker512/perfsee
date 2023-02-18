@@ -15,19 +15,28 @@ limitations under the License.
 */
 
 import './prelude'
-// import { join } from 'path'
+import { join } from 'path'
 
 import { DataSource } from 'typeorm'
 
 import { mysqlEntities } from './db/entities'
 import { SnakeNamingStrategy } from './db/mysql/utils'
 
+const migrations = []
+
+if (require.context) {
+  const r = require.context('../../../db/migrations', false, /\.ts$/)
+  migrations.push(...r.keys().map((key) => r(key)))
+} else {
+  migrations.push(join(__dirname, '../../../db/migrations/*.ts'))
+}
+
 export const dataSource = new DataSource({
   ...perfsee.mysql,
   type: 'mysql',
   namingStrategy: new SnakeNamingStrategy(),
   entities: mysqlEntities,
-  // migrations: [join(__dirname, '../../../db/migrations/*.ts')],
+  migrations,
   migrationsTableName: 'typeorm_migration_table',
   migrationsRun: false,
   synchronize: false,

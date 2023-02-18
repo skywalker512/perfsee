@@ -46,7 +46,7 @@ const webpackConfigs: { [index: string]: webpack.Configuration } = {
     ...getNodeConfig(),
     entry: {
       main: packagePath('@perfsee/platform-server', 'src', 'index.ts'),
-      cli: packagePath('@perfsee/platform-server', 'src', 'cli.app.ts'),
+      // cli: packagePath('@perfsee/platform-server', 'src', 'cli.app.ts'),
     },
   },
   '@perfsee/job-runner': getNodeConfig(),

@@ -7366,6 +7366,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/webpack-env@npm:^1.18.0":
+  version: 1.18.0
+  resolution: "@types/webpack-env@npm:1.18.0"
+  checksum: ecf4daa31cb37d474ac0ce058d83a3cadeb9881ca8107ae93c2299eaa9954943aae09b43e143c62ccbe4288a14db00c918c9debd707afe17c3998f873eaabc59
+  languageName: node
+  linkType: hard
+
 "@types/webpack-node-externals@npm:^2.5.3":
   version: 2.5.3
   resolution: "@types/webpack-node-externals@npm:2.5.3"
@@ -20310,6 +20317,7 @@ __metadata:
     "@types/sinon": ^10.0.12
     "@types/supertest": ^2.0.12
     "@types/webpack": 4.41.27
+    "@types/webpack-env": ^1.18.0
     "@types/webpack-node-externals": ^2.5.3
     "@types/yup": ^0.29.14
     "@typescript-eslint/eslint-plugin": ^5.30.7

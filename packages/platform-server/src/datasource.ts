@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import './prelude'
-import { join } from 'path'
+// import { join } from 'path'
 
 import { DataSource } from 'typeorm'
 
@@ -27,7 +27,7 @@ export const dataSource = new DataSource({
   type: 'mysql',
   namingStrategy: new SnakeNamingStrategy(),
   entities: mysqlEntities,
-  migrations: [join(__dirname, '../../../db/migrations/*.ts')],
+  // migrations: [join(__dirname, '../../../db/migrations/*.ts')],
   migrationsTableName: 'typeorm_migration_table',
   migrationsRun: false,
   synchronize: false,

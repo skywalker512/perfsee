@@ -26,7 +26,7 @@ import {
   ManyToOne,
 } from 'typeorm'
 
-import { Project } from './project.entity'
+import { type Project } from './project.entity'
 
 @Entity()
 export class ProjectJobUsage extends BaseEntity {
@@ -38,7 +38,7 @@ export class ProjectJobUsage extends BaseEntity {
   @RelationId('project')
   projectId!: number
 
-  @ManyToOne(() => Project, { onDelete: 'CASCADE' })
+  @ManyToOne('Project', { onDelete: 'CASCADE' })
   @JoinColumn()
   project!: Project
 

@@ -33,7 +33,7 @@ import {
 import type { AppVersion } from './app-version.entity'
 import type { Artifact } from './artifact.entity'
 import type { Job } from './job.entity'
-import { ProjectJobUsage } from './project-usage-job.entity'
+import { type ProjectJobUsage } from './project-usage-job.entity'
 import { UsagePack } from './usage-pack.entity'
 import type { Environment, Page, Profile } from './property.entity'
 import type { ScriptFile } from './script-file.entity'

@@ -33,9 +33,7 @@ dayjs.extend(duration)
 const root = createRoot(document.querySelector('#app')!)
 root.render(<App />)
 
-// @ts-expect-error
 if (process.env.NODE_ENV === 'development' && module.hot) {
-  // @ts-expect-error
   module.hot.accept('./app.tsx', () => {
     root.render(<App />)
   })

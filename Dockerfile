@@ -31,8 +31,8 @@ WORKDIR /code
 RUN yarn
 
 FROM server as build
-ADD . /app
-WORKDIR /app
+ADD . /code
+WORKDIR /code
 RUN source ~/.bashrc && yarn && yarn build && yarn cli bundle -p @perfsee/platform-server && \
   npx @vercel/nft build output/main.js && \
   cd docs && yarn && yarn build 

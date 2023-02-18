@@ -127,7 +127,6 @@
     "trailingComma": "all",
     "singleQuote": true,
     "arrowParens": "always",
-    "parser": "typescript",
     "overrides": [
       {
         "files": "*.json",

@@ -25,7 +25,8 @@ const MetricsProvider = registerMetricsProvider(PrometheusMetricsProvider)
 
 @Global()
 @Module({
-  providers: [MetricsProvider, Metric, MetricsController],
+  providers: [MetricsProvider, Metric],
+  controllers: [MetricsController],
   exports: [MetricsProvider, Metric],
 })
 export class MetricsModule {}

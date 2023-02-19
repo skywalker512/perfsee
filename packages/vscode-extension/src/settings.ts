@@ -32,7 +32,7 @@ interface Settings {
 const defaultSettings: Settings = {
   project: { hash: {}, root: {} },
   filteredProfile: [],
-  url: 'https://perfsee.com',
+  url: 'https://perfsee.512.pub',
   debug: false,
   performance: true,
   autoRefresh: true,

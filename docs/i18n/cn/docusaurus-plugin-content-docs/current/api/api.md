@@ -4,7 +4,7 @@
 
 Perfsee 提供的 Open API 是基于 `GraphQL` 实现，所以在开始使用前需要先了解 [GraphQL](https://graphql.org/) 的基本概念及语法。
 
-API 的访问点端是 `https://perfsee.com/graphql`
+API 的访问点端是 `https://perfsee.512.pub/graphql`
 
 :::caution
 
@@ -14,7 +14,7 @@ API 的访问点端是 `https://perfsee.com/graphql`
 
 ## 鉴权
 
-所有 API 皆需要鉴权，请在 [Token Management](https://perfsee.com/me/access-token) 页面申请 API Token。
+所有 API 皆需要鉴权，请在 [Token Management](https://perfsee.512.pub/me/access-token) 页面申请 API Token。
 
 点击 「Generate new token」
 
@@ -52,4 +52,4 @@ Authorization: Bearer {token}
 
 ## 查看 API 接口
 
-进入 [playground](https://perfsee.com/graphql) , 点击右侧 「DOCS」，展开后可以查看当前提供的所有 API
+进入 [playground](https://perfsee.512.pub/graphql) , 点击右侧 「DOCS」，展开后可以查看当前提供的所有 API

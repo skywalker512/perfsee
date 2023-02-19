@@ -27,7 +27,7 @@ export class TakeSnapshotCommand extends Command {
     description: `Take a snapshot of the project.`,
     details: `Take a snapshot for all pages of the project.
     
-This command requires the project id from \`-p, --project\` and the access token from \`--token\` or environment variable \`PERFSEE_TOKEN\`, you can create the token from \`https://perfsee.com/access-token\`.
+This command requires the project id from \`-p, --project\` and the access token from \`--token\` or environment variable \`PERFSEE_TOKEN\`, you can create the token from \`https://perfsee.512.pub/access-token\`.
 
 You can filter the pages by appending page names to the command.`,
     examples: [
@@ -89,7 +89,7 @@ You can filter the pages by appending page names to the command.`,
 
     const client = new Client({
       accessToken: accessToken,
-      host: this.server || process.env.PERFSEE_PLATFORM_HOST || 'https://perfsee.com',
+      host: this.server || process.env.PERFSEE_PLATFORM_HOST || 'https://perfsee.512.pub',
     })
 
     this.context.stdout.write(`Project: ${this.project}\n`)

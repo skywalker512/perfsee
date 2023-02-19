@@ -2,7 +2,7 @@
 
 Perfsee webpack plugin used to collect bundle information and analyze.
 
-[Repo](https://github.com/perfsee/perfsee) | [Docs](https://perfsee.com/docs)
+[Repo](https://github.com/perfsee/perfsee) | [Docs](https://perfsee.512.pub/docs)
 
 ## Usage
 

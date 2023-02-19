@@ -168,7 +168,7 @@ export function getBuildEnv() {
     buildEnv = {
       isCi: envs.isCi,
       pwd: 'root' in envs && envs.root ? envs.root : process.cwd(),
-      platform: process.env.PERFSEE_PLATFORM_HOST ?? 'https://perfsee.com',
+      platform: process.env.PERFSEE_PLATFORM_HOST ?? 'https://perfsee.512.pub',
       upload: !process.env.PERFSEE_NO_UPLOAD && envs.isCi,
       git: getGitEnv().catch(() => null),
     }

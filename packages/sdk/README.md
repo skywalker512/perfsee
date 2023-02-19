@@ -20,7 +20,7 @@ perfsee take-snapshot -p <your-project-id> --token <your-access-token>
 
 This command requires the project id from `-p, --project` and the access token
 from `--token` or environment variable `PERFSEE_TOKEN`, you can create the token
-from [https://perfsee.com/access-token](https://perfsee.com/access-token).
+from [https://perfsee.512.pub/access-token](https://perfsee.512.pub/access-token).
 
 You can filter the pages by appending page names to the command.
 

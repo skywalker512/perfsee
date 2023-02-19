@@ -8,7 +8,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 const config = {
   title: 'Perfsee',
   tagline: 'Perfsee the frontend performance analysis platform',
-  url: 'https://perfsee.com',
+  url: 'https://perfsee.512.pub',
   baseUrl: '/docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -29,7 +29,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
-          editUrl: 'https://github.com/perfsee/perfsee/tree/main/docs/',
+          editUrl: 'https://github.com/skywalker512/perfsee/tree/main/docs/',
           routeBasePath: '/',
         },
         blog: false,
@@ -59,7 +59,7 @@ const config = {
         logo: {
           alt: 'Logo',
           src: '/logo.png',
-          href: 'https://perfsee.com',
+          href: 'https://perfsee.512.pub',
           target: '_self',
         },
         items: [
@@ -80,7 +80,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/perfsee/perfsee',
+            href: 'https://github.com/skywalker512/perfsee',
             label: 'GitHub',
             position: 'right',
           },
@@ -94,7 +94,7 @@ const config = {
             items: [
               {
                 label: 'Perfsee',
-                href: 'https://perfsee.com',
+                href: 'https://perfsee.512.pub',
               },
             ],
           },
@@ -116,7 +116,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/perfsee/perfsee',
+                href: 'https://github.com/skywalker512/perfsee',
               },
             ],
           },

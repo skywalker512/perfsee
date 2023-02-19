@@ -8,7 +8,7 @@ sidebar_position: 1
 
 Perfsee provides open api for public, it based on `GraphQL`, so you need to know the basic language syntax of [GraphQL](https://graphql.org/) before you can use it.
 
-The API endpoint is `https://perfsee.com/graphql`
+The API endpoint is `https://perfsee.512.pub/graphql`
 
 :::caution
 
@@ -18,7 +18,7 @@ All API share rate limit to 120 times/minute. Some tasks are triggered by indepe
 
 ## Authorization
 
-Open api need authorization, please apply API Token on the [Token Management](https://perfsee.com/me/access-token) page.
+Open api need authorization, please apply API Token on the [Token Management](https://perfsee.512.pub/me/access-token) page.
 
 Click 「Generate new token」
 
@@ -56,6 +56,6 @@ If you get an error which status code is not **200**, it should be GraphQL synta
 
 ## View GraphQL Schema
 
-Check out [playground](https://perfsee.com/graphql), click `DOCS` on the right, and you can see all api provided.
+Check out [playground](https://perfsee.512.pub/graphql), click `DOCS` on the right, and you can see all api provided.
 
 We would document all the api as much as possible, but some of them may not be well described. You can refer to us and request for an update.

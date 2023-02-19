@@ -24,14 +24,14 @@ test('should generate correct platform url', (t) => {
     service.platformUrl(pathFactory.project.home, {
       projectId: 'test-project',
     }),
-    'https://perfsee.com/projects/test-project/home',
+    'https://perfsee.512.pub/projects/test-project/home',
   )
 
   t.is(
     service.platformUrl(pathFactory.project.home, {
       projectId: 'test-project',
     }),
-    'https://perfsee.com/projects/test-project/home',
+    'https://perfsee.512.pub/projects/test-project/home',
   )
 
   t.is(
@@ -39,7 +39,7 @@ test('should generate correct platform url', (t) => {
       projectId: 'test-project',
       bundleId: 1,
     }),
-    'https://perfsee.com/projects/test-project/bundle/1',
+    'https://perfsee.512.pub/projects/test-project/bundle/1',
   )
 })
 
@@ -59,7 +59,7 @@ test('safe redirect', async (t) => {
   service.safeRedirect(fakeResponse, 'https://www.google.com')
   t.true(fakeRedirect.calledWith('/'))
 
-  service.safeRedirect(fakeResponse, 'https://perfsee.com/login')
+  service.safeRedirect(fakeResponse, 'https://perfsee.512.pub/login')
   t.true(fakeRedirect.calledWith('/login'))
 
   service.safeRedirect(fakeResponse, '../login')
@@ -89,10 +89,10 @@ test('safe redirect', async (t) => {
     service.safeRedirect(fakeResponse, '/example/test')
     t.true(fakeRedirect.calledWith('/example/test'))
 
-    service.safeRedirect(fakeResponse, 'https://perfsee.com/example/login')
+    service.safeRedirect(fakeResponse, 'https://perfsee.512.pub/example/login')
     t.true(fakeRedirect.calledWith('/example/login'))
 
-    service.safeRedirect(fakeResponse, 'https://perfsee.com/abc')
+    service.safeRedirect(fakeResponse, 'https://perfsee.512.pub/abc')
     t.true(fakeRedirect.calledWith('/example'))
 
     service.safeRedirect(fakeResponse, '../test')

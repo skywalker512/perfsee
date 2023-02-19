@@ -9,4 +9,4 @@ The Perfsee official vscode extension.
 - Codelens for function execution costs
 - Aggregated folder execution costs in the tree view
 
-For more detail, please refer our [docs](https://perfsee.com/docs)
+For more detail, please refer our [docs](https://perfsee.512.pub/docs)

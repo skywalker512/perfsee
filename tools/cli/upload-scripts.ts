@@ -32,7 +32,7 @@ const scripts: { [key in PackageName]?: string[] } = {
 export class UploadScriptsCommand extends Command {
   static paths = [['upload-scripts']]
 
-  host: string = Option.String('-h, --host', process.env.PERFSEE_HOST ?? 'https://perfsee.com')
+  host: string = Option.String('-h, --host', process.env.PERFSEE_HOST ?? 'https://perfsee.512.pub')
   token: string = Option.String('-t, --token', process.env.PERFSEE_REGISTRATION_TOKEN ?? '')
 
   async execute() {

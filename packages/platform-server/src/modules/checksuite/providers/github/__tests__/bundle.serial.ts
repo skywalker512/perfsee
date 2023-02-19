@@ -63,7 +63,7 @@ test.serial('bundle comment output', (t) => {
           } as Record<string, BundleJobEntryPoint>,
         } as BundleJobPassedUpdate,
       } as BundleCompletedAction,
-      'https://perfsee.com/projects/perfsee/bundle/1',
+      'https://perfsee.512.pub/projects/perfsee/bundle/1',
     ),
   )
 })

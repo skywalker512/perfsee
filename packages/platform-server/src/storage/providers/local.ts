@@ -80,5 +80,3 @@ export class ObjectStorage extends BaseObjectStorage {
     return join(this.basePath, name)
   }
 }
-
-export class LogObjectStorage extends ObjectStorage {}

@@ -92,6 +92,7 @@ export class RunnerScriptController {
         sha256,
       })
     } catch (e) {
+      await this.storage.delete(storageKey)
       throw new BadRequestException(e)
     }
   }

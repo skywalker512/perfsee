@@ -357,4 +357,12 @@ export interface PerfseeConfig {
       privateKeyFile?: string
     }
   }
+  s3: {
+    enable: boolean
+    accessKeyId: string
+    secretAccessKey: string
+    region: string
+    bucket: string
+    endpoint: string
+  }
 }

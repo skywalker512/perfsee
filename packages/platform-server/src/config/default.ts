@@ -119,4 +119,12 @@ export const getDefaultPerfseeConfig: () => PerfseeConfig = () => ({
       privateKeyFile: './perfsee.pem',
     },
   },
+  s3: {
+    enable: false,
+    accessKeyId: '',
+    secretAccessKey: '',
+    endpoint: '',
+    region: '',
+    bucket: '',
+  },
 })

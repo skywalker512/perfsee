@@ -34,4 +34,10 @@ perfsee.ENV_MAP = {
   EMAIL_FROM_ADDRESS: 'email.from.address',
   GITHUB_OAUTH_CLIENT_ID: 'auth.oauthProviders.github.clientId',
   GITHUB_OAUTH_CLIENT_SECRET: 'auth.oauthProviders.github.clientSecret',
+  S3_ENABLED: ['s3.enable', 'boolean'],
+  S3_ENDPOINT: 's3.endpoint',
+  S3_ACCESS_KEY_ID: 's3.accessKeyId',
+  S3_SECRET_ACCESS_KEY: 's3.secretAccessKey',
+  S3_BUCKET: 's3.bucket',
+  S3_REGION: 's3.region',
 }

@@ -72,6 +72,8 @@ export class GithubService {
         return
       }
       this.privateKey = readFileSync(this.config.privateKeyFile, 'utf8')
+        .split(String.raw`\n`)
+        .join('\n')
     }
   }
 

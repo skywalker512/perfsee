@@ -12,7 +12,7 @@ let service: UrlService
 
 test.before(async () => {
   const module = await Test.createTestingModule({
-    imports: [ConfigModule.forRoot({ https: true, host: 'perfsee.com' })],
+    imports: [ConfigModule.forRoot({ https: true, host: 'perfsee.512.pub' })],
     providers: [UrlService],
   }).compile()
 
@@ -74,7 +74,7 @@ test('safe redirect', async (t) => {
   // test subpath host
   {
     const module = await Test.createTestingModule({
-      imports: [ConfigModule.forRoot({ https: true, host: 'perfsee.com', path: '/example' })],
+      imports: [ConfigModule.forRoot({ https: true, host: 'perfsee.512.pub', path: '/example' })],
       providers: [UrlService],
     }).compile()
 

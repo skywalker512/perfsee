@@ -95,6 +95,7 @@ export class ArtifactService implements OnApplicationBootstrap {
     branch?: string,
     name?: string,
     hash?: string,
+    isBaseline?: boolean,
   ) {
     const query = Artifact.createQueryBuilder('artifact').where('artifact.project_id = :projectId', { projectId })
 
@@ -104,6 +105,10 @@ export class ArtifactService implements OnApplicationBootstrap {
 
     if (branch) {
       query.andWhere('artifact.branch = :branch', { branch })
+    }
+
+    if (isBaseline) {
+      query.andWhere('artifact.is_baseline = true')
     }
 
     if (name) {
@@ -136,10 +141,25 @@ export class ArtifactService implements OnApplicationBootstrap {
     return ArtifactEntrypoint.findBy({ artifactId })
   }
 
-  async getHistory(projectId: number, branch: string, artifactName?: string, from?: Date, to?: Date, first?: number) {
-    const builder = ArtifactEntrypoint.createQueryBuilder()
-      .where('project_id = :projectId', { projectId })
-      .andWhere('branch = :branch', { branch })
+  async getHistory(
+    projectId: number,
+    branch: string,
+    artifactName?: string,
+    from?: Date,
+    to?: Date,
+    first?: number,
+    isBaseline?: boolean,
+  ) {
+    const builder = ArtifactEntrypoint.createQueryBuilder().where('project_id = :projectId', { projectId })
+
+    if (isBaseline) {
+      const artifact = await Artifact.findOne({ where: { projectId, isBaseline }, order: { id: 'DESC' } })
+      if (artifact) {
+        builder.andWhere('branch = :branch', { branch: artifact.branch })
+      }
+    } else {
+      builder.andWhere('branch = :branch', { branch })
+    }
 
     if (artifactName) {
       builder.andWhere('artifact_name = :artifactName', { artifactName })
@@ -193,6 +213,7 @@ export class ArtifactService implements OnApplicationBootstrap {
     if (update.status === BundleJobStatus.Passed) {
       artifact.reportKey = update.reportKey!
       artifact.contentKey = update.contentKey!
+      artifact.moduleMapKey = update.moduleMapKey!
       artifact.duration = update.duration!
       artifact.score = update.score!
     } else if (update.status === BundleJobStatus.Failed) {
@@ -292,7 +313,7 @@ export class ArtifactService implements OnApplicationBootstrap {
     await Artifact.delete(artifact.id)
     await this.projectUsage.recordStorageUsage(projectId, -artifact.uploadSize)
     await this.storage.bulkDelete(
-      [artifact.buildKey, artifact.contentKey, artifact.reportKey].filter(Boolean) as string[],
+      [artifact.buildKey, artifact.contentKey, artifact.reportKey, artifact.moduleMapKey].filter(Boolean) as string[],
     )
 
     return true

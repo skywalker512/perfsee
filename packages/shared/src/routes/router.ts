@@ -57,13 +57,19 @@ export interface RouteTypes {
     scripts: void
     usagePacks: void
   }
+  group: {
+    home: Params<'groupId'>
+    part: Params<'groupId'> & Partial<Params<'part'>>
+    analysis: Params<'groupId'>
+    settings: Params<'groupId'>
+  }
 }
 
 export const staticPath = {
   home: '/',
   docs: {
     home: '/docs',
-    api: '/docs/api',
+    api: '/docs/development/api',
     settings: { home: '/docs/settings', webhook: '/docs/settings/webhook-setting' },
   },
   features: { home: '/features', bundle: '/features/bundle', lab: '/features/lab', source: '/features/source' },
@@ -113,13 +119,19 @@ export const staticPath = {
     scripts: '/admin/runner-scripts',
     usagePacks: '/admin/usage-packs',
   },
+  group: {
+    home: '/groups/:groupId/home',
+    part: '/groups/:groupId/:part?',
+    analysis: '/groups/:groupId/analysis',
+    settings: '/groups/:groupId/settings',
+  },
 }
 
 export const pathFactory = {
   home: makePathsFrom<FactoryParams<RouteTypes['home']>>('/'),
   docs: {
     home: makePathsFrom<FactoryParams<RouteTypes['docs']['home']>>('/docs'),
-    api: makePathsFrom<FactoryParams<RouteTypes['docs']['api']>>('/docs/api'),
+    api: makePathsFrom<FactoryParams<RouteTypes['docs']['api']>>('/docs/development/api'),
     settings: {
       home: makePathsFrom<FactoryParams<RouteTypes['docs']['settings']['home']>>('/docs/settings'),
       webhook: makePathsFrom<FactoryParams<RouteTypes['docs']['settings']['webhook']>>(
@@ -208,12 +220,18 @@ export const pathFactory = {
     scripts: makePathsFrom<FactoryParams<RouteTypes['admin']['scripts']>>('/admin/runner-scripts'),
     usagePacks: makePathsFrom<FactoryParams<RouteTypes['admin']['usagePacks']>>('/admin/usage-packs'),
   },
+  group: {
+    home: makePathsFrom<FactoryParams<RouteTypes['group']['home']>>('/groups/:groupId/home'),
+    part: makePathsFrom<FactoryParams<RouteTypes['group']['part']>>('/groups/:groupId/:part?'),
+    analysis: makePathsFrom<FactoryParams<RouteTypes['group']['analysis']>>('/groups/:groupId/analysis'),
+    settings: makePathsFrom<FactoryParams<RouteTypes['group']['settings']>>('/groups/:groupId/settings'),
+  },
 }
 
 export const titleFactory = {
   '/': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/docs': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
-  '/docs/api': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
+  '/docs/development/api': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/docs/settings': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/docs/settings/webhook-setting': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/features': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
@@ -271,4 +289,9 @@ export const titleFactory = {
   '/admin/runners': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/admin/runner-scripts': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
   '/admin/usage-packs': (data: Record<string, any>) => makeTitlesFrom('Perfsee', data),
+  '/groups/:groupId': (data: Record<string, any>) => makeTitlesFrom('{groupId} | Perfsee', data),
+  '/groups/:groupId/:part?': (data: Record<string, any>) => makeTitlesFrom('{groupId} | Perfsee', data),
+  '/groups/:groupId/home': (data: Record<string, any>) => makeTitlesFrom('{groupId} | Perfsee', data),
+  '/groups/:groupId/analysis': (data: Record<string, any>) => makeTitlesFrom('{groupId} | Perfsee', data),
+  '/groups/:groupId/settings': (data: Record<string, any>) => makeTitlesFrom('{groupId} | Perfsee', data),
 }

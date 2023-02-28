@@ -51,4 +51,4 @@ FROM runner as runner_deploy
 ADD . /code
 WORKDIR /code
 RUN yarn && yarn build
-CMD ["node", "-r", "./tools/paths-register", "packages/job-runner/dist/index.js"]
+CMD ["node", "-r", "./tools/paths-register", "packages/runner/executor/dist/index.js"]

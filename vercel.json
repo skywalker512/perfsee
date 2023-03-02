@@ -1,0 +1,15 @@
+{
+  "buildCommand": "yarn build && cd docs && yarn build && mv ../assets/docs ../assets/platform",
+  "outputDirectory": "./assets/platform",
+  "installCommand": "yarn && cd docs && yarn",
+  "rewrites": [
+    {
+      "source": "/docs/(.*)",
+      "destination": "/docs/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

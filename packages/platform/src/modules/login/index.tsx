@@ -118,7 +118,7 @@ export const Login = () => {
                   return (
                     <a
                       key={provider}
-                      href={`/oauth2/login?returnUrl=${encodeURIComponent(returnUrl)}&provider=${provider}`}
+                      href={serverLink`/oauth2/login?returnUrl=${encodeURIComponent(returnUrl)}&provider=${provider}`}
                     >
                       <BlockButton>
                         {icon}

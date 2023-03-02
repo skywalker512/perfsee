@@ -18,6 +18,7 @@ import { DefaultButton, Dialog, DialogFooter, Persona, PrimaryButton, Stack, Too
 import { useCallback, useState } from 'react'
 
 import { IconToggleButton } from '@perfsee/components'
+import { serverLink } from '@perfsee/platform/common'
 
 import { ConnectedAccount } from '../shared/connected-accounts.module'
 
@@ -41,7 +42,9 @@ export const Account = ({
   }, [account, closeDisconnectDialog, onDisconnect])
 
   const onClickConnect = useCallback(() => {
-    location.href = `/oauth2/login?returnUrl=${encodeURIComponent(location.href)}&provider=${account.provider}`
+    location.href = serverLink`/oauth2/login?returnUrl=${encodeURIComponent(location.href)}&provider=${
+      account.provider
+    }`
   }, [account])
 
   return (

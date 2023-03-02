@@ -21,6 +21,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Redirect } from 'react-router'
 
 import { BodyContainer } from '@perfsee/components'
+import { serverLink } from '@perfsee/platform/common'
 import { ExternalAccount, GitHost } from '@perfsee/schema'
 import { pathFactory } from '@perfsee/shared/routes'
 
@@ -128,7 +129,7 @@ export const ImportGithub = () => {
               <MessageBar messageBarType={MessageBarType.blocked}>
                 Please{' '}
                 <a
-                  href={`/oauth2/login?returnUrl=${encodeURIComponent(location.href)}&provider=${
+                  href={serverLink`/oauth2/login?returnUrl=${encodeURIComponent(location.href)}&provider=${
                     ExternalAccount.github
                   }`}
                 >

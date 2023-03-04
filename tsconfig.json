@@ -19,7 +19,7 @@
     "suppressExcessPropertyErrors": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "preserveSymlinks": true,
+    "preserveSymlinks": false,
     "target": "ES2018",
     "sourceMap": true,
     "esModuleInterop": true,

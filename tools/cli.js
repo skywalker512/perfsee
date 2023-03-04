@@ -33,7 +33,7 @@ const cliDist = `./cli.generated.${cliHash()}.js`
 const cliAbsDist = path.resolve(__dirname, cliDist)
 
 function cliHash() {
-  const lockHash = crypto.createHash('sha256').update(fs.readFileSync('yarn.lock')).digest('hex').substring(0, 5)
+  const lockHash = crypto.createHash('sha256').update(fs.readFileSync('pnpm-lock.yaml')).digest('hex').substring(0, 5)
   const hasher = crypto.createHash('sha256')
 
   cliDeps.forEach((cliDep) => {
@@ -172,7 +172,7 @@ function build() {
     entryPoints: [cliSrc],
     bundle: true,
     platform: 'node',
-    target: 'node14',
+    target: 'node18',
     outfile: cliAbsDist,
     plugins: [externalPlugin],
     sourcemap: true,

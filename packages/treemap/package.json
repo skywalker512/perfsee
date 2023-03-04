@@ -12,7 +12,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/d3-hierarchy": "^3.1.0",
+    "@types/d3-hierarchy": "3.1.0",
     "d3-hierarchy": "^3.1.2",
     "twgl.js": "^5.0.0"
   }

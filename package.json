@@ -3,13 +3,9 @@
   "version": "0.0.0",
   "license": "UNLICENSED",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "examples/*",
-    "packages/plugins/*",
-    "packages/runner/*"
-  ],
   "devDependencies": {
+    "@perfsee/webpack": "workspace:*",
+    "@babel/core": "^7.21.0",
     "@commitlint/config-conventional": "^17.0.3",
     "@commitlint/config-lerna-scopes": "^17.0.2",
     "@graphql-codegen/add": "^4.0.0",
@@ -24,12 +20,12 @@
     "@svgr/webpack": "^6.3.0",
     "@types/debug": "^4.1.7",
     "@types/inquirer": "^9.0.0",
+    "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.182",
-    "@types/node": "16",
+    "@types/node": "18.0.6",
+    "@types/node-fetch": "^2.6.2",
     "@types/nodemon": "^1.19.1",
     "@types/prettier": "^2.6.4",
-    "@types/react": "^18.0.15",
-    "@types/react-dom": "^18.0.6",
     "@types/sinon": "^10.0.12",
     "@types/supertest": "^2.0.12",
     "@types/webpack": "4.41.27",
@@ -64,7 +60,9 @@
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "inquirer": "^9.0.1",
+    "js-yaml": "^4.1.0",
     "lerna": "^6.0.0",
+    "lighthouse": "^9.6.3",
     "lint-staged": "^13.0.3",
     "madge": "^5.0.1",
     "mini-css-extract-plugin": "^2.6.1",
@@ -72,6 +70,7 @@
     "nodemon": "^2.0.19",
     "npm-run-all": "^4.1.5",
     "path-to-regexp": "1.8.0",
+    "postcss": "^8.4.21",
     "postcss-loader": "^7.0.1",
     "prettier": "^2.7.1",
     "raw-loader": "^4.0.2",
@@ -101,7 +100,11 @@
     "webpack-merge": "^5.8.0",
     "webpack-node-externals": "^3.0.0",
     "why-is-node-running": "^2.2.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "@types/react-router": "^5.1.17",
+    "@types/react-router-dom": "^5.3.2"
   },
   "resolutions": {
     "jpeg-js": "0.4.4",
@@ -138,12 +141,12 @@
   },
   "scripts": {
     "cli": "cross-env DEBUG='perfsee:*' node tools/cli.js",
-    "codegen": "yarn cli codegen",
+    "codegen": "cli codegen",
     "build:ts": "tsc -b ./tsconfigs/tsconfig.project.json --verbose",
-    "build": "yarn codegen && cross-env NODE_ENV=production run-p 'build:ts' 'cli bundle -p @perfsee/platform'",
-    "build:npm": "cross-env NODE_ENV=production yarn cli bundle -p @perfsee/bundle-report && yarn cli build -a && yarn clean:tests",
+    "build": "codegen && cross-env NODE_ENV=production run-p 'build:ts' 'cli bundle -p @perfsee/platform'",
+    "build:npm": "cross-env NODE_ENV=production cli bundle -p @perfsee/bundle-report && cli build -a && clean:tests",
     "build:rs": "lerna run build:rs --concurrency 1 --stream",
-    "vscode:watch": "cross-env NODE_ENV=development yarn cli vscode watch",
+    "vscode:watch": "cross-env NODE_ENV=development cli vscode watch",
     "run:ts": "cross-env TS_NODE_PROJECT=tsconfigs/tsconfig.cjs.json NODE_CONFIG_DIR=config DOTENV_CONFIG_PATH=./packages/platform-server/.env node -r ts-node/register/transpile-only -r tsconfig-paths/register",
     "clean": "shx rm -rf ./packages/**/*.tsbuildinfo && shx rm -rf ./packages/**/{esm,dist}",
     "clean:node_modules": "shx rm -rf node_modules packages/*/node_modules",
@@ -151,16 +154,22 @@
     "test:concurrent": "ava",
     "test:serial": "ava --serial",
     "test": "run-p 'test:*'",
-    "typecheck": "yarn build:ts",
-    "coverage": "shx rm -rf coverage/tmp && cross-env NODE_V8_COVERAGE=coverage/tmp yarn test && yarn c8 report -r html",
-    "example": "yarn cli example",
-    "dev": "cross-env NODE_ENV=development yarn cli dev",
-    "typeorm": "yarn run:ts ./node_modules/typeorm/cli.js -d ./packages/platform-server/src/datasource.ts",
+    "typecheck": "build:ts",
+    "coverage": "shx rm -rf coverage/tmp && cross-env NODE_V8_COVERAGE=coverage/tmp test && c8 report -r html",
+    "example": "cli example",
+    "dev": "cross-env NODE_ENV=development cli dev",
+    "typeorm": "run:ts ./node_modules/typeorm/cli.js -d ./packages/platform-server/src/datasource.ts",
     "lint": "cross-env NODE_OPTIONS=--max-old-space-size=8192 eslint . --cache --cache-location ./.eslint-cache",
     "circular": "madge --circular --ts-config ./tsconfig.json packages/**/src/index.ts packages/**/src/index.tsx",
     "postinstall": "husky install",
-    "release": "lerna version --sign-git-tag --exact --allow-branch main",
-    "docs": "cd docs && yarn"
+    "release": "lerna version --sign-git-tag --exact --allow-branch main"
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "pnpm@7.28.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "reflect-metadata": "*"
+      }
+    }
+  }
 }

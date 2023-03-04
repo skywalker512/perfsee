@@ -11,6 +11,9 @@
   "include": [
     "."
   ],
+  "exclude": [
+    "*.generated.*"
+  ],
   "references": [
     {
       "path": "../packages/plugins/webpack"

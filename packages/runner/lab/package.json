@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.20",
-    "ts-node": "^10.9.1"
+    "@types/uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0"

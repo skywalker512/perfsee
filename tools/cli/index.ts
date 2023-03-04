@@ -20,7 +20,7 @@ import { BuildCommand } from './build'
 import { BundleCommand } from './bundle'
 import { CodegenCommand } from './codegen'
 import { DevCommand } from './dev'
-import { ExampleCommand } from './example'
+// import { ExampleCommand } from './example'
 import { ExtractCommand } from './extract'
 import { GenerateLicenseCommand } from './generate-license'
 import { UpdateWorkspaceCommand } from './update-workspace'
@@ -36,7 +36,7 @@ const cli = new Cli({
 cli.register(BuildCommand)
 cli.register(BundleCommand)
 cli.register(DevCommand)
-cli.register(ExampleCommand)
+// cli.register(ExampleCommand)
 cli.register(CodegenCommand)
 cli.register(GenerateLicenseCommand)
 cli.register(VscodeExtensionCommand)

@@ -11,5 +11,10 @@
     "**/tmp": true,
     "**/tsconfig.tsbuildinfo": true
   },
-  "cSpell.words": ["Perfsee", "tsbuildinfo", "tsconfigs"]
+  "cSpell.words": [
+    "Perfsee",
+    "tsbuildinfo",
+    "tsconfigs"
+  ],
+  "references.preferredLocation": "peek"
 }

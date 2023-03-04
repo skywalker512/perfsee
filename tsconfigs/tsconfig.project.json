@@ -33,33 +33,6 @@
       "path": "../packages/platform"
     },
     {
-      "path": "../packages/schema"
-    },
-    {
-      "path": "../packages/sdk"
-    },
-    {
-      "path": "../packages/server-common"
-    },
-    {
-      "path": "../packages/shared"
-    },
-    {
-      "path": "../packages/source-coverage"
-    },
-    {
-      "path": "../packages/tracehouse"
-    },
-    {
-      "path": "../packages/treemap"
-    },
-    {
-      "path": "../packages/utils"
-    },
-    {
-      "path": "../packages/vscode-extension"
-    },
-    {
       "path": "../packages/plugins/esbuild"
     },
     {
@@ -85,6 +58,33 @@
     },
     {
       "path": "../packages/runner/source"
+    },
+    {
+      "path": "../packages/schema"
+    },
+    {
+      "path": "../packages/sdk"
+    },
+    {
+      "path": "../packages/server-common"
+    },
+    {
+      "path": "../packages/shared"
+    },
+    {
+      "path": "../packages/source-coverage"
+    },
+    {
+      "path": "../packages/tracehouse"
+    },
+    {
+      "path": "../packages/treemap"
+    },
+    {
+      "path": "../packages/utils"
+    },
+    {
+      "path": "../packages/vscode-extension"
     },
     {
       "path": "../examples"

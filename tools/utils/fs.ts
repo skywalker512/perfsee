@@ -15,11 +15,14 @@ limitations under the License.
 */
 
 import fs, { promises } from 'fs'
+import Module from 'node:module'
 import path from 'path'
 
 import { format, BuiltInParserName } from 'prettier'
 
 import { pathToRoot } from './path'
+
+const require = Module.createRequire(import.meta.url)
 
 const { prettier: prettierConfig } = require(pathToRoot('package.json'))
 

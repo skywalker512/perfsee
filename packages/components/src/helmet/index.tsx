@@ -18,7 +18,7 @@ import { compact } from 'lodash'
 import type { FC } from 'react'
 import { Helmet as ReactHelmet } from 'react-helmet'
 
-import Logo from './logo.png'
+import Logo from '../../icon/logo.png'
 
 type Props = {
   title?: string

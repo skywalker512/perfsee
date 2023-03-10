@@ -24,12 +24,7 @@ import { SnakeNamingStrategy } from './db/mysql/utils'
 
 const migrations = []
 
-if (require.context) {
-  const r = require.context('../../../db/migrations', false, /\.ts$/)
-  migrations.push(...r.keys().map((key) => r(key)))
-} else {
-  migrations.push(join(__dirname, '../../../db/migrations/*.ts'))
-}
+migrations.push(join(__dirname, '../node_modules/@perfsee/migrations/dist/*.js'))
 
 export const dataSource = new DataSource({
   ...perfsee.mysql,

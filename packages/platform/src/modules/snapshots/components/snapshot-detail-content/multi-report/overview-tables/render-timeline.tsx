@@ -22,7 +22,7 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { IconWithTips } from '@perfsee/components'
 import { darken } from '@perfsee/dls'
 import { formatTime } from '@perfsee/platform/common'
-import { SnapshotDetailType, SnapshotReportSchema } from '@perfsee/platform/modules/snapshots/snapshot-type'
+import { SnapshotDetailType, SnapshotReportSchema } from '@perfsee/platform/modules/snapshots'
 import { TimelineSchema } from '@perfsee/shared'
 
 import { HeaderTitle } from '../style'

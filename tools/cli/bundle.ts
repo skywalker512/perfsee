@@ -16,13 +16,12 @@ limitations under the License.
 
 import { Option } from 'clipanion'
 import inquirer, { Question } from 'inquirer'
-import { first } from 'lodash'
-import webpack from 'webpack'
+import _ from 'lodash'
 
 import { getPackage, PackageName, packagePath, pathToRoot } from '../utils'
 import { getFrontendConfig } from '../webpack/frontend-config'
 import { getNodeConfig } from '../webpack/node-config'
-import { runWebpack } from '../webpack/webpack.config'
+import { RspackConfig, runWebpack } from '../webpack/webpack.config'
 
 import { Command } from './command'
 
@@ -35,7 +34,7 @@ const projectQuestion: Question = {
   prefix: '🛠',
 }
 
-const webpackConfigs: { [index: string]: webpack.Configuration } = {
+const webpackConfigs: { [index: string]: RspackConfig } = {
   '@perfsee/platform': {
     ...getFrontendConfig(),
     output: {
@@ -60,7 +59,6 @@ const webpackConfigs: { [index: string]: webpack.Configuration } = {
       filename: '[name].js',
     },
     optimization: {
-      splitChunks: false,
       runtimeChunk: false,
     },
   },
@@ -93,7 +91,7 @@ export class BundleCommand extends Command {
       // @ts-expect-error
       if (q.choices.length === 1) {
         // @ts-expect-error
-        project = first(q.choices)!
+        project = _.first(q.choices)!
       } else {
         const answer = await inquirer.prompt([q])
         project = answer[q.name!]

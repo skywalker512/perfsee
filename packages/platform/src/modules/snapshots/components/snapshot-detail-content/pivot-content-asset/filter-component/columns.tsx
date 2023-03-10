@@ -20,7 +20,7 @@ import { NeutralColors, SharedColors } from '@fluentui/theme'
 
 import { TableColumnProps, TooltipWithEllipsis, RequestLabelDot } from '@perfsee/components'
 import { formatMsDuration } from '@perfsee/platform/common'
-import { RequestType, RequestTypeColorsMaps } from '@perfsee/platform/modules/snapshots/snapshot-type'
+import { RequestType, RequestTypeColorsMaps } from '@perfsee/platform/modules/snapshots'
 import { RequestSchema } from '@perfsee/shared'
 
 import {

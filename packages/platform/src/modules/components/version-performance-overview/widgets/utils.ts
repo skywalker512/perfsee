@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { formatTime } from '@perfsee/platform/common'
-import { PerformanceTabType } from '@perfsee/platform/modules/snapshots/snapshot-type'
-import { ReportNode } from '@perfsee/platform/modules/version-report/types'
+import { PerformanceTabType } from '@perfsee/platform/modules/snapshots'
+import { ReportNode } from '@perfsee/platform/modules/version-report'
 import { LighthouseScoreType } from '@perfsee/shared'
 import { pathFactory } from '@perfsee/shared/routes'
 

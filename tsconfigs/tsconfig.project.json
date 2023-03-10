@@ -85,12 +85,12 @@
     },
     {
       "path": "../packages/vscode-extension"
-    },
-    {
-      "path": "../examples"
-    },
-    {
-      "path": "../tools"
     }
+    // {
+    //   "path": "../examples"
+    // },
+    // {
+    //   "path": "../tools"
+    // }
   ]
 }

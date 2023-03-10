@@ -1,9 +1,7 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "dist",
-    "module": "CommonJS"
+    "noEmit": true
   },
   "include": [
     "./index.d.ts"

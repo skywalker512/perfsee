@@ -18,7 +18,7 @@ import { Stack } from '@fluentui/react'
 import { FC } from 'react'
 
 import { ProjectInfo } from '@perfsee/platform/modules/shared'
-import { ReportNode } from '@perfsee/platform/modules/version-report/types'
+import { ReportNode } from '@perfsee/platform/modules/version-report'
 
 import {
   FlexCenterWrap,

@@ -18,6 +18,7 @@ export * from './date'
 export * from './get-lh-run-data'
 export * from './data-loader'
 export * from './artifact-link'
+export * from './types'
 
 export function wait(n = 1000) {
   return new Promise<void>((resolve) => {

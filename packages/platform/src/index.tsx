@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import '@abraham/reflection'
+import 'modern-css-reset'
 import { initDevtool } from '@sigi/devtool'
 import dayjs from 'dayjs'
 import calendar from 'dayjs/plugin/calendar'
@@ -30,7 +31,7 @@ dayjs.extend(relativeTime)
 dayjs.extend(calendar)
 dayjs.extend(duration)
 
-const root = createRoot(document.querySelector('#app')!)
+const root = createRoot(document.querySelector('#root')!)
 root.render(<App />)
 
 if (process.env.NODE_ENV === 'development' && module.hot) {

@@ -31,7 +31,7 @@ import { Redis } from './redis'
 
 export async function createApp() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: true,
+    bufferLogs: false,
   })
   app.useLogger(app.get(Logger))
   app.use(raw({ limit: '500mb' }))

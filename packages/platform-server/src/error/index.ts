@@ -15,4 +15,4 @@ limitations under the License.
 */
 
 export * from './helpers'
-export { UserError } from './user-error'
+export { UserError, isUserError } from './user-error'

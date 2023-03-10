@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Module from 'node:module'
 import { join, parse } from 'path'
 
-import { difference, intersection } from 'lodash'
+import _ from 'lodash'
 
 import { rootPath } from './consts'
 import { Logger } from './log'
 import { packageList, PackageName } from './workspace.generated'
+
+const require = Module.createRequire(import.meta.url)
 
 const logger = new Logger('workspace')
 
@@ -265,9 +268,9 @@ export function filterPackages(specified: PackageName[] = [], all = allPackageNa
     throw new Error(`Unknown packages: [${unknownPackages.join(', ')}]`)
   }
 
-  ignored = intersection(all, ignored)
+  ignored = _.intersection(all, ignored)
   const filteredPackages = specified.length ? specified : all.slice(0)
-  return difference(filteredPackages, ignored)
+  return _.difference(filteredPackages, ignored)
 }
 
 export function packagePath(packageName: PackageName, ...paths: string[]) {

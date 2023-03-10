@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
 import { Environment, Page, Snapshot, PageWithCompetitor, SnapshotReport } from '@perfsee/platform-server/db'
-import { ProjectUsageService } from '@perfsee/platform-server/modules/project-usage/service'
+import { ProjectUsageService } from '@perfsee/platform-server/modules/project-usage'
 import { ObjectStorage } from '@perfsee/platform-server/storage'
 import test, { createMock, initTestDB, createDBTestingModule, create } from '@perfsee/platform-server/test'
 import { SnapshotStatus } from '@perfsee/server-common'

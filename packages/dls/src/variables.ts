@@ -122,7 +122,7 @@ export function copyTheme(theme: Theme, variables: DeepPartial<Theme> = {}): The
   return mergeTheme<Theme>(theme, variables)
 }
 
-function mergeTheme<T>(target: T, data: DeepPartial<T>): T {
+function mergeTheme<T extends Theme>(target: T, data: DeepPartial<T>): T {
   const dest: T = Object.create(null)
   for (const [key, value] of Object.entries(target)) {
     const newProperty = data[key]

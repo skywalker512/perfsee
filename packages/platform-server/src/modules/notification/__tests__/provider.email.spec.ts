@@ -8,7 +8,7 @@ import {
   MessageTargetType,
   Setting,
 } from '@perfsee/platform-server/db'
-import { EmailService } from '@perfsee/platform-server/src/modules/email'
+import { EmailService } from '@perfsee/platform-server/modules/email'
 import test, { createMock } from '@perfsee/platform-server/test'
 
 import { EmailNotificationProvider } from '../provider'

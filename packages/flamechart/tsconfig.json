@@ -2,10 +2,7 @@
   "extends": "../../tsconfig",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "composite": true,
     "outDir": "esm",
-    "target": "ES5",
-    "module": "ESNext",
     "rootDir": "./src"
   },
   "include": [

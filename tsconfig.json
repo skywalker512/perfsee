@@ -1,14 +1,15 @@
 {
-  "extends": "./tsconfigs/tsconfig.paths.json",
+  // "extends": "./tsconfigs/tsconfig.paths.json",
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "declarationMap": true,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "newLine": "LF",
     "noEmitHelpers": true,
     "noUnusedLocals": true,
@@ -17,15 +18,17 @@
     "skipLibCheck": true,
     "suppressImplicitAnyIndexErrors": true,
     "suppressExcessPropertyErrors": true,
+    "ignoreDeprecations": "5.0",
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "preserveSymlinks": false,
-    "target": "ES2018",
+    "target": "ES2020",
     "sourceMap": true,
     "esModuleInterop": true,
     "stripInternal": true,
     "resolveJsonModule": true,
     "importsNotUsedAsValues": "remove",
+    "incremental": true,
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -36,13 +39,10 @@
     "typeRoots": [
       "types",
       "node_modules/@types"
-    ],
-    "baseUrl": "./"
+    ]
   },
-  "include": [
-    "./packages",
-    "./examples"
-  ],
+  "files": [],
+  "include": [],
   "exclude": [
     "node_modules",
     "**/esm/**/*",

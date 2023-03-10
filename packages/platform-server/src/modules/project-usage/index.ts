@@ -23,6 +23,8 @@ import { ProjectModule } from '../project'
 import { ProjectProjectUsageResolver } from './resolver'
 import { ProjectUsageService } from './service'
 
+export { ProjectUsageService }
+
 @Module({
   imports: [ProjectModule, DBModule],
   providers: [ProjectProjectUsageResolver, ProjectUsageService],

@@ -23,6 +23,8 @@ import { Project } from '../db'
 
 import { WebhookEventParameters } from './webhook-events'
 
+export * from './webhook-events'
+
 type KnownEvent =
   | 'job.create'
   | 'job.register_payload_getter'

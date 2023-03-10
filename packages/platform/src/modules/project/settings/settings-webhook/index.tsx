@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { WebhookSettings } from '@perfsee/platform/modules/webhook'
+import { WebhookSettings } from '../../../webhook/webhook-settings'
 
 export const SettingsWebhook = () => {
   return <WebhookSettings />

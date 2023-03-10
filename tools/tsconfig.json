@@ -13,13 +13,5 @@
   ],
   "exclude": [
     "*.generated.*"
-  ],
-  "references": [
-    {
-      "path": "../packages/plugins/webpack"
-    },
-    {
-      "path": "../examples"
-    }
   ]
 }

@@ -20,7 +20,7 @@ import { Route } from '@perfsee/components'
 import { staticPath } from '@perfsee/shared/routes'
 
 import { ComparisonBox } from '../components/comparison-box'
-import { SnapshotDetail } from '../snapshots'
+import { SnapshotDetail } from '../snapshots/snapshot-detail'
 
 import { PaginationSnapshotList } from './list'
 

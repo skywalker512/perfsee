@@ -58,7 +58,7 @@ const cardGroups: Array<
       diffField: 'cacheInvalidation',
       desc: 'Total size of new assets',
       detail: () =>
-        import(/* webpackChunkName: "bundle-docs" */ './docs/cache-invalidation.mdx').then((res) => res.default),
+        import(/* webpackChunkName: "bundle-docs" */ '../../../docs/cache-invalidation.mdx').then((res) => res.default),
     },
   ],
   [
@@ -66,26 +66,27 @@ const cardGroups: Array<
       title: 'Assets Count',
       diffField: 'assetsCountDiff',
       desc: 'Total number of asset files emitted.',
-      detail: () => import(/* webpackChunkName: "bundle-docs" */ './docs/asset.mdx').then((res) => res.default),
+      detail: () => import(/* webpackChunkName: "bundle-docs" */ '../../../docs/asset.mdx').then((res) => res.default),
     },
     {
       title: 'Chunks Count',
       diffField: 'chunksCountDiff',
       desc: 'Total number of chunks generated.',
-      detail: () => import(/* webpackChunkName: "bundle-docs" */ './docs/chunk.mdx').then((res) => res.default),
+      detail: () => import(/* webpackChunkName: "bundle-docs" */ '../../../docs/chunk.mdx').then((res) => res.default),
     },
     {
       title: 'Packages Count',
       diffField: 'packagesCountDiff',
       desc: 'Total number of packages bundled.',
-      detail: () => import(/* webpackChunkName: "bundle-docs" */ './docs/package.mdx').then((res) => res.default),
+      detail: () =>
+        import(/* webpackChunkName: "bundle-docs" */ '../../../docs/package.mdx').then((res) => res.default),
     },
     {
       title: 'Duplicated Packages Count',
       diffField: 'duplicatedPackagesCountDiff',
       desc: 'Total number of packages that are duplicated.',
       detail: () =>
-        import(/* webpackChunkName: "bundle-docs" */ './docs/duplicated-package.mdx').then((res) => res.default),
+        import(/* webpackChunkName: "bundle-docs" */ '../../../docs/duplicated-package.mdx').then((res) => res.default),
     },
   ],
 ]

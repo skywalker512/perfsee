@@ -24,13 +24,13 @@ import { v4 as uuid } from 'uuid'
 
 import { Project, Webhook } from '@perfsee/platform-server/db'
 import { UserError } from '@perfsee/platform-server/error'
-import { WebhookEventPayloadFactories } from '@perfsee/platform-server/event/webhook-events'
-import { GqlService } from '@perfsee/platform-server/graphql.module'
+import { WebhookEventPayloadFactories } from '@perfsee/platform-server/event'
 import { RxFetch } from '@perfsee/platform-server/helpers'
 import { Logger } from '@perfsee/platform-server/logger'
 import { Redis } from '@perfsee/platform-server/redis'
 import { parseWebhookEventTypeWildcardExpr } from '@perfsee/shared'
 
+import { GqlService } from '../../graphql.module'
 import { ApplicationService } from '../application/service'
 
 import { DeliveryRecord, WebhookInput } from './resolver'
@@ -50,7 +50,7 @@ export class WebhookService {
   async deliver<EventType extends keyof typeof WebhookEventPayloadFactories>(
     project: Project,
     eventType: EventType,
-    variables: Parameters<typeof WebhookEventPayloadFactories[EventType]>['1'],
+    variables: Parameters<(typeof WebhookEventPayloadFactories)[EventType]>['1'],
   ) {
     try {
       this.logger.debug(`deliver webhook ${eventType}, project: ${project.slug}`, variables)

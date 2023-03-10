@@ -47,7 +47,7 @@ export class StaticModule {
 
     app.use(basePath, expressStatic(assets('platform')))
     app.get('*', (_req, res) => {
-      res.sendFile(assets('platform', 'index.html'))
+      res.sendFile(assets('platform', '/html/index/index.html'))
     })
   }
 }

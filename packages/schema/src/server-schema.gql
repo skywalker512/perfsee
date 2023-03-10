@@ -1567,7 +1567,7 @@ input CookieInputType {
   httpOnly: Boolean!
   secure: Boolean!
   expire: String
-  sameSite: String = "Lax"
+  sameSite: String! = "Lax"
 }
 
 input HeaderInputType {

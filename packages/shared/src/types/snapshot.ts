@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { NetworkRequest as RequestSchema, RequestTiming } from '@perfsee/flamechart/types'
+import { NetworkRequest as RequestSchema, RequestTiming } from '@perfsee/flamechart'
 import { Task } from '@perfsee/tracehouse'
 
 import { MetricScoreSchema, TimelineSchema, UserTimingSchema } from './lighthouse-score'

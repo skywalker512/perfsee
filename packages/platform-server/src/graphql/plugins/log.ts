@@ -17,7 +17,7 @@ limitations under the License.
 import { Plugin } from '@nestjs/apollo'
 import { ApolloServerPlugin, GraphQLRequestListener, GraphQLRequestContext } from 'apollo-server-plugin-base'
 
-import { isUserError } from '@perfsee/platform-server/error/user-error'
+import { isUserError } from '@perfsee/platform-server/error'
 import { Logger } from '@perfsee/platform-server/logger'
 import { Metric } from '@perfsee/platform-server/metrics'
 

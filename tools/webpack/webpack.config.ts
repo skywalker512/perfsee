@@ -16,62 +16,22 @@ limitations under the License.
 
 import { join } from 'path'
 
+import { createBuilder } from '@modern-js/builder'
+import { builderRspackProvider, ModifyRspackConfigFn, BuilderConfig } from '@modern-js/builder-rspack-provider'
+// @ts-expect-error
 import emoji from 'remark-emoji'
 import images from 'remark-images'
-import TerserPlugin from 'terser-webpack-plugin'
-import webpack from 'webpack'
-import WebpackDevServer from 'webpack-dev-server'
-import { merge } from 'webpack-merge'
 
 import { watchRoutes, watchGraphqlSchema } from '../codegen'
-import { IN_CI, rootPath, packages, exists } from '../utils'
+import { rootPath } from '../utils'
 
-import { productionCacheGroups } from './cache-group'
-import { IgnoreNotFoundExportPlugin } from './ignore-not-found-plugin'
-import svgoConfig from './svgo.config.json'
+import { svgPluginSvg } from './svg'
 
 const isProduction = () => process.env.NODE_ENV === 'production'
 
-const OptimizeOptionOptions: () => webpack.Configuration['optimization'] = () => ({
-  minimize: isProduction(),
-  minimizer: [
-    new TerserPlugin({
-      parallel: true,
-      extractComments: true,
-      terserOptions: {
-        parse: {
-          ecma: 2019,
-        },
-        compress: {
-          comparisons: false,
-        },
-        output: {
-          comments: false,
-          // https://github.com/facebookincubator/create-react-app/issues/2488
-          ascii_only: true,
-        },
-      },
-    }),
-  ],
-  removeEmptyChunks: true,
-  providedExports: true,
-  usedExports: true,
-  sideEffects: true,
-  removeAvailableModules: true,
-  runtimeChunk: {
-    name: 'runtime',
-  },
-  splitChunks: {
-    chunks: 'all',
-    minSize: 1,
-    minChunks: 1,
-    maxInitialRequests: Number.MAX_SAFE_INTEGER,
-    maxAsyncRequests: Number.MAX_SAFE_INTEGER,
-    cacheGroups: isProduction() ? productionCacheGroups : { default: false, vendors: false },
-  },
-})
+export type RspackConfig = Parameters<ModifyRspackConfigFn>[0]
 
-const config: () => webpack.Configuration = () => {
+const config: () => RspackConfig = () => {
   let publicPath = process.env.PUBLIC_PATH ?? (isProduction() ? '' : 'http://localhost:8080')
   publicPath = publicPath.endsWith('/') ? publicPath : `${publicPath}/`
 
@@ -82,59 +42,14 @@ const config: () => webpack.Configuration = () => {
       publicPath,
     },
 
-    mode: isProduction() ? 'production' : 'development',
-
-    devtool: isProduction() ? 'hidden-nosources-source-map' : 'eval-cheap-module-source-map',
-
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.gql'],
-      alias: packages.reduce(
-        (alias, pkg) => {
-          const index = pkg.relative('index.js')
-          alias[pkg.name] = exists(index) ? index : pkg.srcPath
-          return alias
-        },
-        {
-          '@fluentui/theme': join(rootPath, 'node_modules', '@fluentui', 'theme'),
-          tslib: join(rootPath, 'node_modules', 'tslib', 'tslib.es6.js'),
-        },
-      ),
     },
 
     module: {
       rules: [
         {
-          test: /\.m?js?$/,
-          resolve: {
-            fullySpecified: false,
-          },
-        },
-        {
-          include: require.resolve('serialize-javascript'),
-          sideEffects: false,
-        },
-        {
           oneOf: [
-            {
-              test: /\.tsx?$/,
-              use: [
-                'thread-loader',
-                {
-                  loader: 'ts-loader',
-                  options: {
-                    transpileOnly: true,
-                    happyPackMode: true,
-                    configFile: join(process.cwd(), 'tsconfig.json'),
-                    experimentalWatchApi: true,
-                    getCustomTransformers: join(process.cwd(), 'tools', 'webpack', 'ts-transformers'),
-                    compilerOptions: {
-                      jsx: isProduction() ? 'react-jsx' : 'react-jsxdev',
-                    },
-                  },
-                },
-              ],
-              exclude: /node_modules/,
-            },
             {
               test: /\.mdx?$/,
               use: [
@@ -149,28 +64,6 @@ const config: () => webpack.Configuration = () => {
               exclude: /node_modules/,
             },
             {
-              test: /\.svg$/,
-              use: [
-                'thread-loader',
-                {
-                  loader: '@svgr/webpack',
-                  options: {
-                    icon: true,
-                    svgoConfig,
-                  },
-                },
-              ],
-              exclude: [/node_modules/],
-            },
-            {
-              test: /\.(png|jpg|gif|svg|webp)$/,
-              type: 'asset/resource',
-            },
-            {
-              test: /\.(ttf|eot|woff|woff2)$/i,
-              type: 'asset/resource',
-            },
-            {
               test: /\.txt$/,
               loader: 'raw-loader',
             },
@@ -178,79 +71,104 @@ const config: () => webpack.Configuration = () => {
         },
       ],
     },
-
-    plugins: [
-      ...(IN_CI ? [] : [new webpack.ProgressPlugin({ percentBy: 'entries' })]),
-      new IgnoreNotFoundExportPlugin(),
-    ],
-    optimization: OptimizeOptionOptions(),
+    builtins: {
+      decorator: {
+        legacy: true,
+        emitMetadata: true,
+      },
+      emotion: {},
+      pluginImport: [
+        {
+          style: false,
+          libraryName: 'lodash',
+          libraryDirectory: '',
+          camelToDashComponentName: false,
+        },
+      ],
+    },
   }
 }
 
-export async function startDevServer(entry: string, externalConfig: webpack.Configuration) {
+const commonBuilderConfig: BuilderConfig = {
+  output: {
+    svgDefaultExport: 'component',
+  },
+  performance: {
+    printFileSize: false,
+  },
+}
+
+export async function startDevServer(entry: string, externalConfig: RspackConfig) {
   return Promise.all([watchRoutes(), watchGraphqlSchema()]).then(async () => {
-    const compiler = webpack(merge(config(), { entry }, externalConfig))
     const serverProxyRoutes = ['/graphql', '/auth', '/oauth2', '/health', '/github', '/docs', '/artifacts']
-    const devServer = new WebpackDevServer(
-      {
-        historyApiFallback: true,
-        hot: true,
-        port: 8080,
-        compress: true,
-        proxy: serverProxyRoutes.map((route) => ({
-          path: route,
-          target: process.env.PERFSEE_PLATFORM_HOST ?? 'http://localhost:3000',
-        })),
+    const provider = builderRspackProvider({
+      builderConfig: {
+        ...commonBuilderConfig,
+        tools: {
+          devServer: {
+            historyApiFallback: true,
+            proxy: serverProxyRoutes.reduce((obj, route) => {
+              obj[route] = {
+                target: process.env.PERFSEE_PLATFORM_HOST ?? 'http://localhost:3000',
+              }
+              return obj
+            }, {}),
+          },
+          rspack: (inputConfig, { mergeConfig }) => {
+            return mergeConfig(inputConfig, config(), externalConfig)
+          },
+        },
       },
-      compiler,
-    )
-    await devServer.start()
+    })
+
+    const builder = await createBuilder(provider, {
+      entry: {
+        index: entry,
+      },
+    })
+
+    builder.addPlugins([svgPluginSvg()])
+
+    await builder.startDevServer()
     return new Promise(() => {})
   })
 }
 
-export function runWebpack(
+export async function runWebpack(
   { entry, project }: { entry: string; project: string },
   mode: 'production' | 'development' = 'development',
-  externalConfig: webpack.Configuration = {},
+  externalConfig: RspackConfig = {},
 ) {
-  const mergedConfig = merge(
-    config(),
-    {
-      mode,
-      entry,
+  const provider = builderRspackProvider({
+    builderConfig: {
+      ...commonBuilderConfig,
       output: {
-        path: join(rootPath, 'dist', project),
-        filename: '[name].[contenthash:8].js',
-        chunkFilename: '[name].[contenthash:8].js',
+        ...commonBuilderConfig.output,
+        distPath: {
+          root: join(rootPath, 'dist', project),
+        },
+      },
+      tools: {
+        rspack: (inputConfig, { mergeConfig }) => {
+          return mergeConfig(inputConfig, config(), externalConfig)
+        },
       },
     },
-    externalConfig,
-  )
+  })
+
+  const builder = await createBuilder(provider, {
+    entry: {
+      index: entry,
+    },
+    target: 'node',
+  })
+
+  builder.addPlugins([svgPluginSvg()])
 
   if (mode === 'development') {
-    return Promise.all([watchRoutes(), watchGraphqlSchema])
-      .then(() => {
-        return new Promise(() => {
-          webpack(mergedConfig).watch({}, (_, stats) => {
-            // eslint-disable-next-line no-console
-            console.log(stats?.toString({ colors: true }))
-          })
-        })
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+    await Promise.all([watchRoutes(), watchGraphqlSchema])
+    await builder.build({ mode, watch: true })
   }
 
-  return new Promise<void>((resolve, reject) => {
-    webpack(mergedConfig).run((err, stats) => {
-      if (err) {
-        reject(err)
-        return
-      }
-      console.info(stats!.toString({ colors: true }))
-      resolve()
-    })
-  })
+  await builder.build()
 }

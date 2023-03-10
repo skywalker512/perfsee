@@ -16,10 +16,9 @@ limitations under the License.
 
 import { join } from 'path'
 
-import webpack from 'webpack'
-import nodeExternals from 'webpack-node-externals'
-
 import { rootPath } from '../utils'
+
+import { RspackConfig } from './webpack.config'
 
 export function getNodeConfig() {
   return {
@@ -27,33 +26,23 @@ export function getNodeConfig() {
     resolve: { mainFields: ['esnext', 'module', 'main'] },
     optimization: {
       minimize: false,
-      splitChunks: false,
       runtimeChunk: false,
-      nodeEnv: false,
     },
     target: 'node',
-    node: false,
-    externals: nodeExternals({
-      modulesDir: join(rootPath, 'node_modules'),
-      allowlist: [/@perfsee\/(.*)/],
-    }),
+    // node: false,
+    // externals: nodeExternals({
+    //   modulesDir: join(rootPath, 'node_modules'),
+    //   allowlist: [/@perfsee\/(.*)/],
+    // }),
     output: {
       path: join(rootPath, 'output'),
       filename: '[name].js',
       chunkFilename: '[name].js',
-      libraryTarget: 'commonjs2',
     },
-    module: {
-      parser: {
-        javascript: {
-          commonjsMagicComments: true,
-        },
+    builtins: {
+      define: {
+        'process.env.BUNDLED': 'true',
       },
     },
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env.BUNDLED': 'true',
-      }),
-    ],
-  } as webpack.Configuration
+  } as RspackConfig
 }

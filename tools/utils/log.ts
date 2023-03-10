@@ -16,7 +16,7 @@ limitations under the License.
 
 /* eslint-disable no-console */
 import chalk from 'chalk'
-import { identity } from 'lodash'
+import _ from 'lodash'
 
 import { newLineSeparator } from './consts'
 
@@ -33,7 +33,7 @@ export class Logger {
 
   constructor(private readonly tag: string = '') {}
 
-  getLineLogger(logLine: (...line: string[]) => void, color: (...text: string[]) => string = identity) {
+  getLineLogger(logLine: (...line: string[]) => void, color: (...text: string[]) => string = _.identity) {
     return (...args: StringLike[]) => {
       args.forEach((arg) => {
         arg

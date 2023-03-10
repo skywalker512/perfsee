@@ -20,7 +20,7 @@ import { omit, merge } from 'lodash'
 import { defer, throwError } from 'rxjs'
 import { tap, map, catchError } from 'rxjs/operators'
 
-import { LoggerFactory, serverLink } from '@perfsee/platform/common'
+import { serverLink } from '@perfsee/platform/common'
 
 import { RxFetch } from './rx-fetch'
 import { RequestOptions, GraphQLQuery, RequestBody, QueryOptions, MutationOptions, QueryResponse } from './types'
@@ -34,7 +34,9 @@ export class GraphQLClient {
     'content-type': 'application/json',
   }
 
-  constructor(private readonly fetch: RxFetch, private readonly logger: LoggerFactory) {}
+  constructor(
+    private readonly fetch: RxFetch, // private readonly logger: LoggerFactory
+  ) {}
 
   query<Q extends GraphQLQuery>(options: QueryOptions<Q>) {
     return this.request<Q, QueryResponse<Q>>(options)
@@ -73,18 +75,18 @@ export class GraphQLClient {
     })
 
     return defer(() => {
-      if (__IS_SERVER__) {
-        const expressHttpContext = require('express-http-context')
+      // if (__IS_SERVER__) {
+      //   const expressHttpContext = require('express-http-context')
 
-        context = {
-          ...context,
-          headers: {
-            ...context.headers,
-            cookie: expressHttpContext.get('cookie'),
-            Authorization: expressHttpContext.get('Authorization'),
-          },
-        }
-      }
+      //   context = {
+      //     ...context,
+      //     headers: {
+      //       ...context.headers,
+      //       cookie: expressHttpContext.get('cookie'),
+      //       Authorization: expressHttpContext.get('Authorization'),
+      //     },
+      //   }
+      // }
 
       return this.fetch.post<ExecutionResult<Response>>(this.url, context).pipe(
         tap({
@@ -113,17 +115,17 @@ export class GraphQLClient {
     })
   }
 
-  private reportPerformance(body: RequestBody, time: number) {
-    this.logger.info('graphql', {
-      time,
-      operationName: body.operationName,
-      body: omit(body, 'form'),
-    })
+  private reportPerformance(_body: RequestBody, _time: number) {
+    // this.logger.info('graphql', {
+    //   time,
+    //   operationName: body.operationName,
+    //   body: omit(body, 'form'),
+    // })
   }
 
-  private reportError(body: RequestBody, errors: ReadonlyArray<GraphQLError>) {
-    errors.forEach((error) => {
-      this.logger.error('graphql error', error, { body: omit(body, 'form') })
+  private reportError(_body: RequestBody, errors: ReadonlyArray<GraphQLError>) {
+    errors.forEach((_error) => {
+      // this.logger.error('graphql error', error, { body: omit(body, 'form') })
     })
   }
 

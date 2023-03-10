@@ -18,7 +18,7 @@ import { useTheme } from '@emotion/react'
 import { IStackStyles, Stack, Text } from '@fluentui/react'
 import { ReactNode } from 'react'
 
-import EmptyIcon from './empty.svg'
+import EmptyIcon from '../../icon/empty.svg'
 
 interface Props {
   title?: ReactNode

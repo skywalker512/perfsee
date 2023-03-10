@@ -7,9 +7,15 @@
   "main": "dist/index.js",
   "private": true,
   "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./routes": "./dist/routes/index.js",
+    "./*": "./dist/*.js"
+  },
   "dependencies": {
     "@perfsee/utils": "workspace:*",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "path-to-regexp": "1.8.0"
   },
   "devDependencies": {
     "@perfsee/bundle-analyzer": "workspace:*",

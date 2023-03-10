@@ -26,10 +26,9 @@ const cliDeps = [
   path.resolve(__dirname, './webpack'),
   path.resolve(__dirname, './codegen'),
   path.resolve(__dirname, './utils'),
-  path.resolve(__dirname, '../node_modules/@perfsee/webpack/src'),
 ]
 const cliSrc = path.resolve(__dirname, './cli/index.ts')
-const cliDist = `./cli.generated.${cliHash()}.js`
+const cliDist = `./cli.generated.${cliHash()}.mjs`
 const cliAbsDist = path.resolve(__dirname, cliDist)
 
 function cliHash() {
@@ -45,31 +44,9 @@ function cliHash() {
         hasher.update(fs.readFileSync(filename))
       })
   })
+
+  hasher.update(fs.readFileSync(path.resolve(__filename)))
   return lockHash + hasher.digest('hex').substring(0, 5)
-}
-
-/**
- *
- * @param {string} from
- * @param {string} requirePath
- */
-function resolvePackage(from, requirePath) {
-  if (!from.endsWith(path.sep + 'node_modules')) {
-    from = path.join(path.parse(from).dir, './node_modules')
-  }
-
-  if (!requirePath.startsWith('@') && requirePath.includes(path.sep)) {
-    requirePath = requirePath.split(path.sep)[0]
-  }
-
-  while (from.startsWith(process.cwd())) {
-    const pkgJsonPath = path.join(from, requirePath, 'package.json')
-    if (fs.existsSync(pkgJsonPath)) {
-      return pkgJsonPath
-    }
-
-    from = path.join(path.parse(from.substring(0, from.lastIndexOf(path.sep + 'node_modules'))).dir, './node_modules')
-  }
 }
 
 function cleanup() {
@@ -85,6 +62,7 @@ function cleanup() {
 function build() {
   cleanup()
   console.info('Building CLI...')
+  /** @type {import('esbuild')} */
   const esbuild = require('esbuild')
 
   /**
@@ -103,6 +81,8 @@ function build() {
         'rollup',
         'esbuild',
         '@swc/core',
+        '@modern-js/builder',
+        '@modern-js/builder-rspack-provider',
       ])
       build.onResolve({ filter: /.*/ }, ({ path: requirePath, kind, importer }) => {
         if (builtins.has(requirePath) || requirePath.startsWith('node:') || kind === 'require-resolve') {
@@ -124,21 +104,28 @@ function build() {
           }
         }
 
-        try {
-          const pkgJsonPath = resolvePackage(importer, requirePath)
+        // if (
+        //   [
+        //     'inquirer',
+        //     'figures',
+        //     'is-unicode-supported',
+        //     'cli-cursor',
+        //     'restore-cursor',
+        //     'ansi-escapes',
+        //     'wrap-ansi',
+        //     'string-width',
+        //     'strip-ansi',
+        //     'ansi-styles',
+        //     'remark-emoji',
+        //     'emoticon',
+        //     'mdast-util-find-and-replace',
+        //   ].includes(requirePath)
+        // ) {
+        //   return {
+        //     external: false,
+        //   }
+        // }
 
-          if (pkgJsonPath) {
-            const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'))
-
-            if (pkgJson.type === 'module' || pkgJsonPath.match(/node_modules/g).length > 1) {
-              return {
-                external: false,
-                namespace: 'bundled',
-              }
-            }
-          }
-          // eslint-disable-next-line no-empty
-        } catch {}
         if (!importer) {
           return {
             external: false,
@@ -172,6 +159,7 @@ function build() {
     entryPoints: [cliSrc],
     bundle: true,
     platform: 'node',
+    format: 'esm',
     target: 'node18',
     outfile: cliAbsDist,
     plugins: [externalPlugin],
@@ -182,5 +170,5 @@ function build() {
 const preparasion = fs.existsSync(cliAbsDist) ? Promise.resolve() : build()
 
 preparasion.then(() => {
-  require(cliDist)
+  import(cliDist)
 })

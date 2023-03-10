@@ -180,7 +180,6 @@ export class SourceJobWorker extends JobWorker<SourceAnalyzeJob> {
           const module = moduleMap[moduleId]
           const moduleName =
             module.concatenatingLength > 0 ? module.path + `+${module.concatenatingLength} modules` : module.path
-
           bundleModuleMap[moduleId] = moduleName
         }
       }

@@ -37,7 +37,7 @@ import { EventEmitter } from '@perfsee/platform-server/event'
 import { Logger } from '@perfsee/platform-server/logger'
 import { Metric } from '@perfsee/platform-server/metrics'
 import { ObjectStorage } from '@perfsee/platform-server/storage'
-import { artifactKey } from '@perfsee/platform-server/utils/artifact-link'
+import { artifactKey } from '@perfsee/platform-server/utils'
 import {
   JobRequestParams,
   JobRequestResponse,

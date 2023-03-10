@@ -16,8 +16,8 @@ limitations under the License.
 
 import { Injectable } from '@nestjs/common'
 import { InjectDataSource, InjectEntityManager } from '@nestjs/typeorm'
-import { DataSource, EntityManager, EntityTarget, QueryRunner } from 'typeorm'
-import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel'
+import { DataSource, EntityManager, EntityTarget, ObjectLiteral, QueryRunner } from 'typeorm'
+import { IsolationLevel } from 'typeorm/driver/types/IsolationLevel.js'
 
 @Injectable()
 export class DBService {
@@ -30,7 +30,7 @@ export class DBService {
     return this.connection.getMetadata(entity).findColumnWithPropertyName(propertyName as string)?.databasePath
   }
 
-  repo<T>(entity: EntityTarget<T>) {
+  repo<T extends ObjectLiteral>(entity: EntityTarget<T>) {
     return this.manager.getRepository(entity)
   }
 

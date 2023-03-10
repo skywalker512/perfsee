@@ -1,4 +1,4 @@
-import { Effect, EffectModule, ImmerReducer, Module } from '@sigi/core'
+import { Action, Effect, EffectModule, ImmerReducer, Module } from '@sigi/core'
 import { Draft, freeze } from 'immer'
 import { Observable } from 'rxjs'
 import { endWith, map, mergeMap, startWith, switchMap } from 'rxjs/operators'
@@ -28,7 +28,7 @@ export class FlamechartModule extends EffectModule<State> {
   }
 
   @Effect()
-  fetchFlamechartData(payload$: Observable<string>) {
+  fetchFlamechartData(payload$: Observable<string>): Observable<Action<FlameChartData>> {
     return payload$.pipe(
       mergeMap((key) =>
         this.fetch.get<FlameChartData>(key).pipe(

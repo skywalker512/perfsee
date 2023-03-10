@@ -23,7 +23,7 @@ import { UserError } from '@perfsee/platform-server/error'
 import { CryptoService } from '@perfsee/platform-server/helpers'
 import { Logger } from '@perfsee/platform-server/logger'
 import { Redis } from '@perfsee/platform-server/redis'
-import { DeepPartial } from '@perfsee/platform-server/utils/types'
+import { DeepPartial } from '@perfsee/platform-server/utils'
 
 @Injectable()
 export class ApplicationSettingService implements OnApplicationBootstrap {

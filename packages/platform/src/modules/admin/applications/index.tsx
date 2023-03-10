@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom'
 import { ContentCard, Pagination } from '@perfsee/components'
 import { pathFactory } from '@perfsee/shared/routes'
 
-import { WebhookSettings } from '../../webhook'
+import { WebhookSettings } from '../../webhook/webhook-settings'
 
 import { CreateAppModal } from './create-app-modal'
 import { Application, ApplicationsModule, AuthProject } from './module'

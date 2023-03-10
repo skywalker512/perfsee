@@ -13,20 +13,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-import { Controller } from '@nestjs/common'
-
-import { Project } from '@perfsee/platform-server/db'
-import { OnEvent, WebhookEventParameters } from '@perfsee/platform-server/event'
-
-import { WebhookService } from './service'
-
-@Controller()
-export class WebhookController {
-  constructor(private readonly service: WebhookService) {}
-
-  @OnEvent('webhook.deliver')
-  async onDeliverWebhook(project: Project, parameters: WebhookEventParameters) {
-    await this.service.deliver(project, parameters.eventType, parameters)
-  }
-}
+export * from './snapshot-detail'
+export * from './snapshot-type'

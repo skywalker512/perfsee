@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import Module from 'node:module'
 import { isAbsolute } from 'path'
 
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import { Option } from 'clipanion'
 import inquirer, { Question } from 'inquirer'
-import { difference } from 'lodash'
+import _ from 'lodash'
 import { rollup, RollupOptions } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import sourcemaps from 'rollup-plugin-sourcemaps'
@@ -28,6 +29,8 @@ import sourcemaps from 'rollup-plugin-sourcemaps'
 import { exists, packages, getPackage, PackageName } from '../utils'
 
 import { Command } from './command'
+
+const require = Module.createRequire(import.meta.url)
 
 const bundlePackages: PackageName[] = packages
   .filter((pkg) => pkg.packageJson.bundle)
@@ -108,7 +111,7 @@ interface ExternalsPluginOptions {
   externals: string[]
 }
 export function externalsPlugin(options: ExternalsPluginOptions = { forceBundle: [], externals: [] }) {
-  const externals = difference([...externalsRepoPackages, ...options.externals], options.forceBundle ?? [])
+  const externals = _.difference([...externalsRepoPackages, ...options.externals], options.forceBundle ?? [])
 
   return {
     name: 'rollup-plugin-externals',

@@ -22,6 +22,9 @@ import { Option } from 'clipanion'
 import { allPackageNames, getPackage, PackageName, packagePath, writeFileAsync } from '../utils'
 
 import { Command } from './command'
+import Module from 'node:module'
+
+const require = Module.createRequire(import.meta.url)
 
 /**
  * Extract a module and its dependencies from the monorepo so that it can be run independently

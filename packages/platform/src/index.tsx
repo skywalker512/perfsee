@@ -31,11 +31,5 @@ dayjs.extend(relativeTime)
 dayjs.extend(calendar)
 dayjs.extend(duration)
 
-const root = createRoot(document.querySelector('#root')!)
+const root = createRoot(document.querySelector('#app')!)
 root.render(<App />)
-
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  module.hot.accept('./app.tsx', () => {
-    root.render(<App />)
-  })
-}

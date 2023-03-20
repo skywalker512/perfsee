@@ -39,7 +39,10 @@ class CDPRequest {
     return this.driver.sendCommand('Fetch.continueRequest', {
       ...data,
       requestId: this.rawRequest.requestId,
-      headers: Object.entries(data?.headers ?? {}).map(([name, value]) => ({ name, value })),
+      headers: Object.entries((data?.headers ?? {}) as Record<string, string>).map(([name, value]) => ({
+        name,
+        value,
+      })),
     })
   }
 

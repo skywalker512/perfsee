@@ -143,8 +143,8 @@ export class BaseChart extends PureComponent<EChartsReactProps> {
   private bindEvents(instance: EChartsInstance, events: EChartsReactProps['onEvents']) {
     const _bindEvent = (eventName: string, func: (params: ChartEventParam) => void) => {
       if (isString(eventName) && isFunction(func)) {
-        instance.on(eventName, (param) => {
-          func(param, instance)
+        instance.on(eventName, (param: any) => {
+          func(param)
         })
       }
     }

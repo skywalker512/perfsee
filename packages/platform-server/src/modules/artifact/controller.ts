@@ -42,8 +42,8 @@ import { pathFactory } from '@perfsee/shared/routes'
 import { AppVersionService } from '../app-version/service'
 import { CurrentUser } from '../auth'
 import { PermissionProvider, Permission } from '../permission'
-import { ProjectUsageService } from '../project-usage/service'
 import { ProjectService } from '../project/service'
+import { ProjectUsageService } from '../project-usage/service'
 
 import { ArtifactService } from './service'
 

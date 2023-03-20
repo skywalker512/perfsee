@@ -23,6 +23,9 @@
     "@perfsee/job-runner-bundle": "workspace:*",
     "@perfsee/job-runner-lab": "workspace:*",
     "@perfsee/job-runner-source": "workspace:*",
-    "@types/uuid": "^9.0.0"
+    "@types/uuid": "^9.0.0",
+    "@types/sinon": "^10.0.13",
+    "@types/node-fetch": "^2.5.12",
+    "@types/lodash": "^4.14.182"
   }
 }

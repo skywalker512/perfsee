@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference path="../../../node_modules/lighthouse/types/externs.d.ts" />
-/// <reference path="../../../node_modules/lighthouse/types/artifacts.d.ts" />
-/// <reference path="../../../node_modules/lighthouse/types/global-lh.d.ts" />
+/// <reference path="../node_modules/lighthouse/types/externs.d.ts" />
+/// <reference path="../node_modules/lighthouse/types/artifacts.d.ts" />
+/// <reference path="../node_modules/lighthouse/types/global-lh.d.ts" />
 
 const MainThreadTasks = require('lighthouse/lighthouse-core/lib/tracehouse/main-thread-tasks')
 const TraceProcessor = require('lighthouse/lighthouse-core/lib/tracehouse/trace-processor')
@@ -62,9 +62,7 @@ const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|file|https?):/
 TraceProcessor._isNavigationStartOfInterest = (event: LH.TraceEvent) => {
   return (
     event.name === 'navigationStart' &&
-    (!event.args.data ||
-      !event.args.data.documentLoaderURL ||
-      ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL))
+    (!event.args.data?.documentLoaderURL || ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL))
   )
 }
 

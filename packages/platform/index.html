@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta v="<%=version %>" />
+    <title>Perfsee</title>
+    <script>
+      window.APP_VERSION = '<%=version%>'
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta v="<%=version %>" />
-  <% if (typeof publicPath != 'undefined') {
-    const origin = new URL(publicPath).origin %>
-    <link rel="dns-prefetch" href="<%=origin%>" />
-    <link rel="preconnect" href="<%=origin%>" crossorigin />
-  <% } %>
-  <style>
-    <%=browserStyleReset %>
-  </style>
-  <title>Perfsee</title>
-  <script>window.APP_VERSION = "<%=version%>"</script>
-</head>
-
-<body style="height: 100vh; overflow: auto">
-  <div id="app" style="height: 100%"></div>
-</body>
-
+  <body style="height: 100vh; overflow: auto">
+    <div id="app" style="height: 100%"></div>
+  </body>
 </html>

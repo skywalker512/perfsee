@@ -71,7 +71,7 @@
     "@types/express-session": "^1.17.5",
     "@types/json-bigint": "^1.0.1",
     "@types/lodash": "^4.14.182",
-    "@types/node-fetch": "^2.6.2",
+    "@types/node-fetch": "^2.5.12",
     "@types/nodemailer": "^6.4.4",
     "@types/qs": "^6.9.7",
     "@types/redlock": "^4.0.3",

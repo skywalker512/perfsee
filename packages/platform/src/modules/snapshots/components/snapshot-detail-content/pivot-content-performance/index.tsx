@@ -119,7 +119,7 @@ export const AdviceList = (props: { list: LighthouseAudit[]; type: LighthouseGro
 }
 
 export const AnalysisReportContent = ({ snapshot }: Pick<Props, 'snapshot'>) => {
-  const categories = snapshot.categories ?? {}
+  const categories = (snapshot.categories ?? {}) as NonNullable<typeof snapshot.categories>
   const [tabName, setTabName] = useState<AnalysisReportTabType>(AnalysisReportTabType.Performance)
 
   const onLinkClick = useCallback((item?: PivotItem) => {

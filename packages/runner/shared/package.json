@@ -14,6 +14,8 @@
     "winston-transport": "^4.5.0"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.5.12"
+    "@types/node-fetch": "^2.5.12",
+    "@types/sinon": "^10.0.13",
+    "@types/lodash": "^4.14.182"
   }
 }

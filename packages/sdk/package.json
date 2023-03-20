@@ -26,7 +26,9 @@
     "graphql": "^16.0.0",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.2",
-    "simple-git": "^3.15.0"
+    "simple-git": "^3.15.0",
+    "@types/lodash": "^4.14.182",
+    "@types/node-fetch": "^2.5.12"
   },
   "devDependencies": {
     "@perfsee/schema": "workspace:*",

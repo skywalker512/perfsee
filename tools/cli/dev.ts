@@ -87,13 +87,9 @@ export class DevCommand extends Command {
         exec: 'node',
         script: pkg.relative('src'),
         delay: 2500,
-        nodeArgs: [
-          '-r',
-          'ts-node/register/transpile-only',
-          '-r',
-          'tsconfig-paths/register',
-          this.inspect ? '--inspect' : undefined,
-        ].filter(Boolean) as string[],
+        nodeArgs: ['-r', 'ts-node/register/transpile-only', this.inspect ? '--inspect' : undefined].filter(
+          Boolean,
+        ) as string[],
         env: {
           TS_NODE_PROJECT: './tsconfigs/tsconfig.cjs.json',
           NODE_ENV: 'development',

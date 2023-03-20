@@ -21,6 +21,7 @@
     "@perfsee/bundle-analyzer": "workspace:*",
     "@perfsee/flamechart": "workspace:*",
     "@perfsee/plugin-utils": "workspace:*",
-    "@perfsee/tracehouse": "workspace:*"
+    "@perfsee/tracehouse": "workspace:*",
+    "@types/lodash": "^4.14.182"
   }
 }

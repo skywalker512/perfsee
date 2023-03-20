@@ -14,46 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RspackConfig } from './webpack.config'
+import { Configuration } from '@rspack/core'
 
-// import { PerfseePlugin } from '@perfsee/webpack'
+import { getPackage, pathToRoot } from '../utils'
 
-// import { getPackage, pathToRoot } from '../utils'
-
-// const browserStyleReset = readFileSync(require.resolve('modern-css-reset'), 'utf-8')
-
-export function getFrontendConfig() {
-  // const pkg = getPackage('@perfsee/platform')
+export function getFrontendConfig(): Configuration {
+  const pkg = getPackage('@perfsee/platform')
   return {
     resolve: { mainFields: ['esnext', 'browser', 'module', 'main'] },
     builtins: {
       define: {
+        'process.env.NODE_ENV': `"${process.env.NODE_ENV ?? 'production'}"`,
         LOCAL_REPORT: false,
         PERFSEE_PLATFORM_HOST: `"${process.env.PERFSEE_PLATFORM_HOST ?? ''}"`,
         __IS_SERVER__: process.env.__IS_SERVER__ === 'true',
       },
+      html: [
+        {
+          favicon: pathToRoot('assets', 'favicon.ico'),
+          template: pathToRoot('packages', 'platform', 'index.html'),
+          templateParameters: {
+            version: pkg.version,
+          },
+        },
+      ],
     },
-    plugins: [
-      // new HtmlWebpackPlugin({
-      //   favicon: pathToRoot('assets', 'favicon.ico'),
-      //   template: pathToRoot('packages', 'platform', 'index.html'),
-      //   templateParameters: {
-      //     publicPath: process.env.PUBLIC_PATH,
-      //     browserStyleReset,
-      //     version: pkg.version,
-      //   },
-      // }),
-      // new webpack.DefinePlugin({
-      //   LOCAL_REPORT: false,
-      //   PERFSEE_PLATFORM_HOST: `"${process.env.PERFSEE_PLATFORM_HOST ?? ''}"`,
-      //   __IS_SERVER__: process.env.__IS_SERVER__ === 'true',
-      // }),
-      // new PerfseePlugin({
-      //   project: 'perfsee',
-      //   serverOptions: {
-      //     publicPath: getPackage('@perfsee/plugin-utils').relative('public'),
-      //   },
-      // }),
-    ],
-  } as RspackConfig
+    plugins: [],
+  }
 }

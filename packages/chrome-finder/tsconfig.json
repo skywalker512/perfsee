@@ -4,8 +4,7 @@
     "composite": true,
     "rootDir": "src",
     "outDir": "dist",
-    "target": "ES2020",
-    "module": "CommonJS"
+    "target": "ES2020"
   },
   "include": [
     "./src/**/*"

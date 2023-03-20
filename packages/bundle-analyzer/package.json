@@ -29,6 +29,8 @@
     "query-string": "^7.1.1",
     "tar": "^6.1.11",
     "tslib": "^2.4.0",
-    "@types/estree": "^1.0.0"
+    "@types/estree": "^1.0.0",
+    "@types/sinon": "^10.0.13",
+    "@types/lodash": "^4.14.182"
   }
 }

@@ -1,6 +1,13 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "version": "1.3.0",
+  "packages": [
+    "packages/*",
+    "packages/plugins/*",
+    "packages/runner/*",
+    "tools",
+    "db/migrations"
+  ],
+  "version": "1.5.1",
   "useWorkspaces": true,
   "npmClient": "pnpm",
   "message": "chore: release"

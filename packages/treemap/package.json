@@ -1,6 +1,6 @@
 {
   "name": "@perfsee/treemap",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "Web tree map chart, based on webgl.",
   "repository": "https://github.com/perfsee/perfsee",
   "license": "Apache-2.0",
@@ -14,6 +14,7 @@
   "dependencies": {
     "@types/d3-hierarchy": "3.1.0",
     "d3-hierarchy": "^3.1.2",
+    "tslib": "^2.4.0",
     "twgl.js": "^5.0.0"
   }
 }

@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const { utils } = require('@commitlint/config-lerna-scopes')
+// const { utils } = require('@commitlint/config-lerna-scopes')/
 
 module.exports = {
   extends: ['@commitlint/config-conventional'],
-  rules: {
-    'scope-enum': async (ctx) => [2, 'always', [...(await utils.getPackages(ctx)), 'docs']],
-  },
+  // rules: {
+  //   'scope-enum': async (ctx) => [2, 'always', [...(await utils.getPackages(ctx)), 'docs']],
+  // },
 }

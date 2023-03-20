@@ -56,7 +56,8 @@ const webpackConfigs: { [index: string]: RspackConfig } = {
     devtool: 'inline-cheap-module-source-map',
     output: {
       path: packagePath('@perfsee/plugin-utils', 'public'),
-      filename: '[name].js',
+      filename: 'report.js',
+      asyncChunks: false,
     },
     optimization: {
       runtimeChunk: false,

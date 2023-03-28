@@ -1,8 +1,9 @@
-import {Frame, CallTreeNode} from './profile'
+import { Frame, CallTreeNode } from './profile'
 
 import { lastOf } from './utils'
 import { clamp, Rect, Vec2 } from './math'
 import { ProfileSearchEngine } from './profile-search'
+import { TimingFrame } from './timing-profile'
 
 export interface FlamechartFrame {
   node: CallTreeNode
@@ -46,7 +47,7 @@ export function buildFlamechart(source: FlamechartForeachDataSource, rootFilter?
       children: [],
       start: value,
       end: value,
-      depth: stack.length
+      depth: stack.length,
     }
     if (parent) {
       parent.children.push(frame)
@@ -98,7 +99,7 @@ export function buildNonStackFlamechart(source: FlamechartForeachDataSource, roo
       children: [],
       start: value,
       end: Infinity,
-      depth: stack.length
+      depth: stack.length,
     }
     stack.push(frame)
   }
@@ -110,8 +111,8 @@ export function buildNonStackFlamechart(source: FlamechartForeachDataSource, roo
     }
     console.assert(stack.length > 0)
 
-    const closeFrameIndex = stack.findIndex((frame) => frame.node === node);
-    console.assert(closeFrameIndex !== -1);
+    const closeFrameIndex = stack.findIndex((frame) => frame.node === node)
+    console.assert(closeFrameIndex !== -1)
 
     const closeFrame = stack[closeFrameIndex]
     closeFrame.end = value
@@ -130,7 +131,65 @@ export function buildNonStackFlamechart(source: FlamechartForeachDataSource, roo
   return new Flamechart(layers, minValue, maxValue, minFrameWidth, source.getColorBucketForFrame, source.formatValue)
 }
 
-export function buildFlamechartWithProcessor(source: FlamechartForeachDataSource, processor: (node: CallTreeNode) => {level: number, start: number, end: number}, rootFilter?: RootFilter) {
+export function buildReactFlamechart(source: FlamechartForeachDataSource, rootFilter?: RootFilter) {
+  const layers: StackLayer[] = []
+  const openFrame = (node: CallTreeNode, value: number) => {
+    if (rootFilter && !rootFilter(node)) {
+      return
+    }
+
+    const reactInfo = (node.frame as TimingFrame).info
+    const lane = reactInfo?.laneNum || 0
+
+    const frame: FlamechartFrame = {
+      node,
+      parent: null,
+      children: [],
+      start: value,
+      end: Infinity,
+      depth: layers[lane]?.length || 0,
+    }
+
+    ;(layers[lane] ||= []).push(frame)
+  }
+
+  let minFrameWidth = Infinity
+  const closeFrame = (node: CallTreeNode, value: number) => {
+    if (rootFilter && !rootFilter(node)) {
+      return
+    }
+
+    const reactInfo = (node.frame as TimingFrame).info
+    const lane = (reactInfo?.laneNum as number) || 0
+    const closeFrameIndex = layers[lane].findIndex((frame) => frame.node === node)
+
+    const closeFrame = layers[lane][closeFrameIndex]
+    closeFrame.end = value
+
+    minFrameWidth = Math.min(minFrameWidth, closeFrame.end - closeFrame.start)
+  }
+
+  const maxValue = source.maxValue
+  const minValue = source.minValue
+  source.forEachCall(openFrame, closeFrame)
+
+  if (!isFinite(minFrameWidth)) minFrameWidth = 1
+
+  return new Flamechart(
+    layers.filter(Boolean),
+    minValue,
+    maxValue,
+    minFrameWidth,
+    source.getColorBucketForFrame,
+    source.formatValue,
+  )
+}
+
+export function buildFlamechartWithProcessor(
+  source: FlamechartForeachDataSource,
+  processor: (node: CallTreeNode) => { level: number; start: number; end: number },
+  rootFilter?: RootFilter,
+) {
   const layers: StackLayer[] = []
   let minFrameWidth = Infinity
   const openFrame = (node: CallTreeNode) => {
@@ -145,7 +204,7 @@ export function buildFlamechartWithProcessor(source: FlamechartForeachDataSource
       children: [],
       start: info.start,
       end: info.end,
-      depth: info.level
+      depth: info.level,
     }
     while (layers.length <= info.level) layers.push([])
     layers[info.level].push(frame)
@@ -274,7 +333,7 @@ export class Flamechart {
 
     return {
       matchFrames,
-      highestScoreFrame
+      highestScoreFrame,
     }
   }
 
@@ -284,7 +343,6 @@ export class Flamechart {
     private maxValue: number = 0,
     private minFrameWidth: number = 1,
     public getColorBucketForFrame: (frame: Frame) => number,
-    public formatValue: (v: number) => string
-  ) {
-  }
+    public formatValue: (v: number) => string,
+  ) {}
 }

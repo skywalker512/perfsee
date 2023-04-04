@@ -497,6 +497,9 @@ type SnapshotReport {
 
   """the link to snapshot report source coverage data file"""
   sourceCoverageLink: String
+
+  """the link to snapshot report react profile data file"""
+  reactProfileLink: String
 }
 
 """
@@ -541,6 +544,7 @@ type ApplicationSettings {
   enableProjectCreate: Boolean!
   enableProjectDelete: Boolean!
   enableProjectImport: Boolean!
+  usePendingJobTable: Boolean!
   registrationToken: String!
   oauthProviders: [ExternalAccount!]!
 }
@@ -609,6 +613,9 @@ type Profile {
 
   """bandwidth limit"""
   bandWidth: String!
+
+  """Enable react prfiling"""
+  reactProfiling: Boolean!
 
   """Disable scanning of this profile"""
   disable: Boolean!
@@ -1591,6 +1598,9 @@ input UpdateProfileInput {
   """bandwidth limit"""
   bandWidth: String
 
+  """Enable react prfiling"""
+  reactProfiling: Boolean
+
   """Disable scanning of this profile"""
   disable: Boolean
 }
@@ -1626,6 +1636,7 @@ input UpdateApplicationSettingsInput {
   enableProjectCreate: Boolean
   enableProjectDelete: Boolean
   enableProjectImport: Boolean
+  usePendingJobTable: Boolean
 }
 
 input UpdateRunnerScriptInput {

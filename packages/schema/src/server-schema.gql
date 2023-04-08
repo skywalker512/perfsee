@@ -312,8 +312,8 @@ type Project {
   """bundle min,max,average score"""
   bundleScores(from: DateTime!, to: DateTime!): ScoreItem!
 
-  """lab min,max,average score"""
-  labScores(from: DateTime!, to: DateTime!): ScoreItem!
+  """the metrics of snapshot report"""
+  labAvgMetrics(from: DateTime!, to: DateTime!): AvgMetricType!
 
   """the oldest & latest artifacts"""
   artifactRecords(from: DateTime!, to: DateTime!, isBaseline: Boolean): [Artifact!]
@@ -453,6 +453,9 @@ type SnapshotReport {
   """
   sourceCoverageStorageKey: String @deprecated(reason: "use `sourceCoverageLink` instead")
 
+  """Source job status, null if there is no source job"""
+  sourceStatus: SourceStatus
+
   """key metrics data"""
   metrics: JSON!
 
@@ -500,6 +503,16 @@ type SnapshotReport {
 
   """the link to snapshot report react profile data file"""
   reactProfileLink: String
+
+  """the link to statistics from source analysis"""
+  sourceAnalyzeStatisticsLink: String
+}
+
+enum SourceStatus {
+  Pending
+  Running
+  Completed
+  Failed
 }
 
 """
@@ -668,10 +681,8 @@ type Setting {
   """branches where message should be sent if"""
   bundleMessageBranches: [String!]!
 
-  """
-  Whether to enable the experimental feature of automatic source association
-  """
-  autoDetectVersion: Boolean!
+  """deprecated"""
+  autoDetectVersion: Boolean! @deprecated(reason: "useless, enabled by default for all projects")
 
   """what kind of lab message would be sent"""
   labMessageSource: LabMessageSource!
@@ -1180,6 +1191,20 @@ type ScoreItem {
   averageScore: Float
 }
 
+type AvgMetricType {
+  """performance score"""
+  score: Float
+  FCP: Float
+  FMP: Float
+  LCP: Float
+  SI: Float
+  TBT: Float
+  TTI: Float
+  MPFID: Float
+  CLS: Float
+  WS: Float
+}
+
 type GroupEdge {
   cursor: String!
   node: Group!
@@ -1449,9 +1474,7 @@ input UpdateSettingInput {
   """branches where message should be sent if"""
   bundleMessageBranches: [String!]
 
-  """
-  Whether to enable the experimental feature of automatic source association
-  """
+  """deprecated"""
   autoDetectVersion: Boolean
 
   """what kind of lab message would be sent"""

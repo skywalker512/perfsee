@@ -29,7 +29,7 @@ import {
   BeforeInsert,
 } from 'typeorm'
 
-import { SnapshotStatus } from '@perfsee/server-common'
+import { SnapshotStatus, SourceStatus } from '@perfsee/server-common'
 import { MetricKeyType } from '@perfsee/shared'
 
 import type { Project } from './project.entity'
@@ -39,12 +39,15 @@ import type { SourceIssue } from './source-issue.entity'
 
 registerEnumType(SnapshotStatus, { name: 'SnapshotStatus' })
 
+registerEnumType(SourceStatus, { name: 'SourceStatus' })
+
 @ObjectType({ description: 'page performance report' })
 @Entity()
 export class SnapshotReport extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   id!: number
 
+  @Index()
   @Field(() => Int, { name: 'id' })
   @Column({ type: 'int' })
   iid!: number
@@ -136,6 +139,16 @@ export class SnapshotReport extends BaseEntity {
 
   @Column({ type: 'varchar', nullable: true })
   reactProfileStorageKey!: string | null
+
+  @Column({ type: 'varchar', nullable: true })
+  sourceAnalyzeStatisticsStorageKey!: string | null
+
+  @Field(() => SourceStatus, {
+    nullable: true,
+    description: 'Source job status, null if there is no source job',
+  })
+  @Column({ type: 'tinyint', default: SourceStatus.Pending, nullable: true })
+  sourceStatus!: SourceStatus
 
   @Field(() => GraphQLJSON, { description: 'key metrics data' })
   @Column({ type: 'json', nullable: true })
